@@ -1,0 +1,2 @@
+In the column TXN_Shares, what is the significance of the period? 
+What is the appropriate way to model this data?
