@@ -1,6 +1,6 @@
 namespace TransactionReportGenerator.Models
 {
-    internal enum TransactionType
+    public enum TransactionType
     {
         None = 0,
         Buy,

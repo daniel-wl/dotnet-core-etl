@@ -7,7 +7,7 @@ namespace TransactionReportGenerator.Models
         public TransactionMap()
         {
             Map(m => m.Date).Name("TXN_DATE");
-            Map(m => m.TransactionType).Name("TXN_TYPE");
+            Map(m => m.TransactionType).Name("TXN_TYPE").TypeConverter<TransactionTypeConverter>();
             Map(m => m.Shares).Name("TXN_SHARES");
             Map(m => m.Price).Name("TXN_PRICE");
             Map(m => m.Fund).Name("FUND");
