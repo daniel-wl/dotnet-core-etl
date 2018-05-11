@@ -6,7 +6,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 
-namespace TransactionReportGenerator.Models
+namespace TransactionReportGenerator.Models.TypeConverters
 {
     public class TransactionTypeConverter : DefaultTypeConverter
     {

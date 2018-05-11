@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using TransactionReportGenerator.Models;
-
+using TransactionReportGenerator.Models.TypeConverters;
 
 namespace TransactionReportGenerator.Test
 {

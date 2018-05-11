@@ -1,4 +1,5 @@
 using CsvHelper.Configuration;
+using TransactionReportGenerator.Models.TypeConverters;
 
 namespace TransactionReportGenerator.Models
 {
