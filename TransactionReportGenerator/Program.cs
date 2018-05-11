@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using CsvHelper;
 using TransactionReportGenerator.Models;
+using TransactionReportGenerator.BusinessLogic;
 
 namespace TransactionReportGenerator
 {
@@ -27,13 +28,6 @@ namespace TransactionReportGenerator
             RunMenuLoop(csvFile);
 
             return 0;
-        }
-
-        public static Transaction[] LoadTransactions(string pathToCsvFile)
-        {
-            CsvReader csvReader = new CsvReader(File.OpenText(pathToCsvFile));
-            csvReader.Configuration.RegisterClassMap<TransactionMap>();
-            return csvReader.GetRecords<Transaction>().ToArray();
         }
 
         public static void RunMenuLoop(string csvFile)
@@ -82,7 +76,7 @@ namespace TransactionReportGenerator
             switch(choice)
             {
                 case ConsoleKey.D1:
-                    Transaction[] transactions = LoadTransactions(csvFile);    
+                    SalesSummary salesSummary = new SalesSummary(csvFile);
                     break;
                 case ConsoleKey.D2:
                     break;

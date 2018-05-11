@@ -2,6 +2,7 @@
 using System.IO;
 using NUnit.Framework;
 using TransactionReportGenerator;
+using TransactionReportGenerator.BusinessLogic;
 
 namespace TransactionReportGenerator.Test
 {
@@ -12,8 +13,8 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void LoadCsvTest()
         {
-            var transactions = Program.LoadTransactions(PathToCsv);
-            Assert.Greater(transactions.Length, 0, "Should have some transactions.");
+            var transactions = TransactionLoader.LoadTransactions(PathToCsv);
+            Assert.Greater(transactions.Count, 0, "Should have some transactions.");
         }
     }
 }
