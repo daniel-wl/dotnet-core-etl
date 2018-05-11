@@ -39,5 +39,35 @@ namespace TransactionReportGenerator.Test
             TransactionType convertedType = (TransactionType)converter.ConvertFromString(toConvert, null, null);
             Assert.AreEqual(TransactionType.None, convertedType, "Expected SELL to convert to TransactionType.Buy.");
         }
+
+        [TestCase("$0.99", 0.99)]
+        [TestCase("$123", 123)]
+        [TestCase("$92834.34", 92834.34)]
+        [TestCase("$2348.00", 2348.00)]
+        [TestCase("$123.0012", 123.0012)]
+        [TestCase("-123.99", -123.99)]
+        [TestCase("-123", -123)]       
+        [TestCase("-123.00", -123.00)]      
+        [TestCase("0.99", 0.99)]
+        [TestCase("0", 0)]
+        [TestCase("123.123", 123.123)]
+        public void ConvertValidPriceTest(string toConvert, double expectedValue)
+        {
+            PriceTypeConverter converter = new PriceTypeConverter();
+            double convertedType = (double)converter.ConvertFromString(toConvert, null, null);
+            Assert.AreEqual(expectedValue, convertedType, $"Expected valid value {toConvert} to convert successfully.");
+        }
+
+        [TestCase("abc")]
+        [TestCase("")]
+        [TestCase("       ")]
+        [TestCase("#0.99")]
+        public void ConvertInvalidPriceTest(string toConvert)
+        {
+            PriceTypeConverter converter = new PriceTypeConverter();
+            Assert.Throws<FormatException>(() => {
+                converter.ConvertFromString(toConvert, null, null);
+            });
+        }
     }
 }
