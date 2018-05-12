@@ -51,18 +51,47 @@ namespace TransactionReportGenerator.Test
         public void GetSummaryForDateRangeTest()
         {
             SalesSummary salesSummary = new SalesSummary(GetFakeTransactions());
-            var totalSold = salesSummary.GetTotalSoldForDateRangePerInvestor(DateTime.Now.Subtract(new TimeSpan(2, 0, 0, 0)));
+            var totalSold = salesSummary.GetTotalSoldForDateRangePerInvestor(DateTime.Now.Subtract(new TimeSpan(1, 5, 0, 0)));
             Assert.IsNotNull(totalSold, "Sales summary should not be null");
             Assert.IsNotEmpty(totalSold, "Sales summary should not be empty.");
+            Assert.IsTrue(totalSold.TryGetValue("John Doe", out var johnDoeSales), "Should have gotten sales for John Doe");
+            Assert.AreEqual(1, johnDoeSales, "Incorrect sales amount for John Doe.");
+            Assert.IsTrue(totalSold.TryGetValue("Samantha Sample", out var samanthaSampleSales), "Should have gotten sales for Samantha Sample");
+            Assert.AreEqual(1, samanthaSampleSales, "Incorrect sales amount for Samantha Sample.");
+            Assert.IsTrue(totalSold.TryGetValue("Tom Test", out var tomTestSales), "Should have gotten sales for Tom Test");
+            Assert.AreEqual(1, tomTestSales, "Incorrect sales amount for Tom Test.");
         }
 
         [Test]
         public void FilterTransactionsByDateTest()
         {
             SalesSummary salesSummary = new SalesSummary(GetFakeTransactions());
+            DateTime startDate = DateTime.Now.Subtract(new TimeSpan(days: 2, hours: 0, minutes:0, seconds: 0));
+            List<Transaction> transactions = salesSummary.FilterTransactionsByDate(startDate);
+            Assert.IsFalse(transactions.Any(t => t.Date < startDate), "Should have returned only transactions with date greater than starting date.");
         }
 
-        private List<Transaction> GetFakeTransactions()
+        [TestCase(1, 1)]
+        [TestCase(2, 1)]
+        [TestCase(3, 1)]
+        [TestCase(4, 4)]
+        [TestCase(5, 4)]
+        [TestCase(6, 4)]
+        [TestCase(7, 7)]
+        [TestCase(8, 7)]
+        [TestCase(9, 7)]
+        [TestCase(10, 10)]
+        [TestCase(11, 10)]
+        [TestCase(12, 10)]
+        public void GetStartOfQuarterTest(int month, int expectedResult)
+        {
+            SalesSummary salesSummary = new SalesSummary(GetFakeTransactions());
+            int startOfQuarter = salesSummary.GetStartOfQuarter(new DateTime(year: 2018, month: month, day: 15));
+            Assert.AreEqual(expectedResult, startOfQuarter, $"Incorred quarter start date.");
+        }
+
+
+        private static List<Transaction> GetFakeTransactions()
         {
             return new List<Transaction>
             {
@@ -99,7 +128,7 @@ namespace TransactionReportGenerator.Test
                     Investor = "Tom Test",
                     Price = 1,
                     TransactionType = TransactionType.Sell,
-                    Date = DateTime.Now.Subtract(new TimeSpan(days: 1, hours: 1, minutes:0, seconds: 0))                    
+                    Date = DateTime.Now.Subtract(new TimeSpan(days: 1, hours: 0, minutes:0, seconds: 0))                    
                 }
             };
         }
