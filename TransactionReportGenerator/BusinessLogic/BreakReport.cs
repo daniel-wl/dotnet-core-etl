@@ -72,7 +72,5 @@ namespace TransactionReportGenerator.BusinessLogic
             double sharesSold = transactions.Where(t => t.TransactionType == TransactionType.Sell).Select(t => t.Shares).Sum();
             return sharesBought - sharesSold;
         }
-
-        
     }
 }

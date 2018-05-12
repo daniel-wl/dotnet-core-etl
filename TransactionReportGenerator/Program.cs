@@ -94,6 +94,10 @@ namespace TransactionReportGenerator
                     Console.ReadKey();
                     break;
                 case ConsoleKey.D4:
+                    ProfitReport profitReport = new ProfitReport(TransactionLoader.LoadTransactions(csvFile));
+                    Console.WriteLine(profitReport.PrintToString());
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
                     break;
                 case ConsoleKey.D0:
                     Console.WriteLine("Goodbye.");
