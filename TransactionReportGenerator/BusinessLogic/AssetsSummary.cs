@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using TransactionReportGenerator.Models;
 
 namespace TransactionReportGenerator.BusinessLogic
@@ -14,7 +15,23 @@ namespace TransactionReportGenerator.BusinessLogic
 
         public override string PrintToString()
         {
-            throw new NotImplementedException();
+            Dictionary<string, List<string>> investorsByReps = GetInvestorsByReps(Transactions);            
+            StringBuilder output = new StringBuilder();
+
+            output.AppendLine("********** Assets Summary **********");
+            
+            foreach(var investorListForSalesRep in investorsByReps)
+            {
+                string salesRep = investorListForSalesRep.Key;
+                output.AppendLine();
+                output.AppendLine($"Assets held by investors for sales rep {salesRep}:");
+                foreach(var investor in investorListForSalesRep.Value)
+                {
+                    output.AppendLine($"Investor {investor}: ${GetNetAmountHeldForInvestor(investor)}");
+                }
+            }
+
+            return output.ToString();
         }
 
         internal static string [] GetUniqueSalesReps(List<Transaction> transactions)
