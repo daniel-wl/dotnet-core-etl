@@ -88,6 +88,10 @@ namespace TransactionReportGenerator
                     Console.ReadKey();
                     break;
                 case ConsoleKey.D3:
+                    BreakReport breakReport = new BreakReport(TransactionLoader.LoadTransactions(csvFile));
+                    Console.WriteLine(breakReport.PrintToString());
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
                     break;
                 case ConsoleKey.D4:
                     break;
