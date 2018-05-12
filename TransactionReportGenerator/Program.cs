@@ -77,6 +77,9 @@ namespace TransactionReportGenerator
             {
                 case ConsoleKey.D1:
                     SalesSummary salesSummary = new SalesSummary(TransactionLoader.LoadTransactions(csvFile));
+                    Console.WriteLine(salesSummary.PrintToString());
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
                     break;
                 case ConsoleKey.D2:
                     break;
