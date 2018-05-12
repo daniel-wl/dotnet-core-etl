@@ -21,5 +21,16 @@ namespace TransactionReportGenerator.BusinessLogic
         {
             return transactions.Select(t => t.SalesRepresentative).Distinct().ToArray();
         }
+
+        internal static Dictionary<string, List<string>> GetInvestorsByReps(List<Transaction> transactions)
+        {
+            Dictionary<string, List<string>> investorsByReps = new Dictionary<string, List<string>>();
+            foreach(string salesRep in GetUniqueSalesReps(transactions))
+            {
+                investorsByReps.Add(salesRep, transactions.Where(t => t.SalesRepresentative == salesRep).Select(t => t.Investor).Distinct().ToList());
+            }
+
+            return investorsByReps;
+        }
     }
 }
