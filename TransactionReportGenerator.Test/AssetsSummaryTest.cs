@@ -33,8 +33,8 @@ namespace TransactionReportGenerator.Test
         }
 
         [TestCase("John Doe", 0)]
-        [TestCase("Samantha Sample", -1)]
-        [TestCase("Tom Test", -1)]
+        [TestCase("Samantha Sample", 1)]
+        [TestCase("Tom Test", 1)]
         public void GetNetAmountHeldForInvestorTest(string investor, double expectedResult)
         {
             AssetsSummary assetsSummary = new AssetsSummary(Fakes.GetFakeTransactions());

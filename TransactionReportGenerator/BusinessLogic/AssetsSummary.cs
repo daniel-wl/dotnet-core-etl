@@ -38,7 +38,7 @@ namespace TransactionReportGenerator.BusinessLogic
             List<Transaction> transactionsForInvestor = Transactions.Where(t => t.Investor == investor).ToList();
             double totalBought = transactionsForInvestor.Where(t => t.TransactionType ==  TransactionType.Buy).Select(t => t.Price).Sum();
             double totalSold = transactionsForInvestor.Where(t => t.TransactionType ==  TransactionType.Sell).Select(t => t.Price).Sum();
-            return totalBought - totalSold;
+            return totalSold - totalBought;
         }
     }
 }
