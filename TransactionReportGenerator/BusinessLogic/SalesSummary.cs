@@ -6,26 +6,14 @@ using TransactionReportGenerator.Models;
 
 namespace TransactionReportGenerator.BusinessLogic
 {
-    public class SalesSummary
+    public class SalesSummary : SummaryBase
     {
-        internal readonly List<Transaction> Transactions;
-        
         public SalesSummary(List<Transaction> transactions)
+            : base (transactions)
         {
-            if(transactions == null)
-            {
-                throw new ArgumentNullException(nameof(transactions));
-            }
-
-            if(!transactions.Any())
-            {
-                throw new ArgumentException("Must have at least one transaction.", nameof(transactions));
-            }
-
-            Transactions = transactions;
         }
 
-        public string PrintToString()
+        public override string PrintToString()
         {
             StringBuilder output = new StringBuilder();
 
