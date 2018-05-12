@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
+using TransactionReportGenerator.BusinessLogic;
 using TransactionReportGenerator.Models;
 
 namespace TransactionReportGenerator.Test
 {
-    public static class Fakes
+    public static class TestData
     {
+        public static List<Transaction> GetRealTransactionsFromCsv()
+        {
+            return TransactionLoader.LoadTransactions("../../../../TransactionReportGenerator/Data.csv");
+        }
+
         public static List<Transaction> GetFakeTransactions()
         {
             return new List<Transaction>

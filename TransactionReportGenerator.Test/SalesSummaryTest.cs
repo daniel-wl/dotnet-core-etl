@@ -24,13 +24,13 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void CreateSalesSummaryWithTransactionsTest()
         {
-            Assert.DoesNotThrow(() => new SalesSummary(new List<Transaction>(Fakes.GetFakeTransactions())), "Creating a sales summary with a non-empty transaction list should not throw.");
+            Assert.DoesNotThrow(() => new SalesSummary(new List<Transaction>(TestData.GetFakeTransactions())), "Creating a sales summary with a non-empty transaction list should not throw.");
         }
 
         [Test]
         public void GetUniqueInvestorsTest()
         {
-            string[] investors = SalesSummary.GetUniqueInvestors(Fakes.GetFakeTransactions());
+            string[] investors = SalesSummary.GetUniqueInvestors(TestData.GetFakeTransactions());
             Assert.AreEqual(investors.Length, 3, "Incorrect number of unique investors");
             Assert.IsNotNull(investors.SingleOrDefault(i => i == "John Doe"), "Investor John Doe not found.");
             Assert.IsNotNull(investors.SingleOrDefault(i => i == "Samantha Sample"), "Investor Samantha Sample not found.");
@@ -40,7 +40,7 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetSellAmountsPerInvestorTestTest()
         {
-            double[] sellAmounts = SalesSummary.GetSellAmountsForInvestor("John Doe", Fakes.GetFakeTransactions());
+            double[] sellAmounts = SalesSummary.GetSellAmountsForInvestor("John Doe", TestData.GetFakeTransactions());
             Assert.AreEqual(2, sellAmounts.Length, "Incorrect number of sale prices");
             Assert.IsNotNull(sellAmounts.SingleOrDefault(i => i == 1), "Expected sale price not found.");
             Assert.IsNotNull(sellAmounts.SingleOrDefault(i => i == 2), "Expected sale price not found.");
@@ -50,7 +50,7 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetSummaryForDateRangeTest()
         {
-            SalesSummary salesSummary = new SalesSummary(Fakes.GetFakeTransactions());
+            SalesSummary salesSummary = new SalesSummary(TestData.GetFakeTransactions());
             var totalSold = salesSummary.GetTotalSoldForDateRangePerInvestor(DateTime.Now.Subtract(new TimeSpan(1, 5, 0, 0)));
             Assert.IsNotNull(totalSold, "Sales summary should not be null");
             Assert.IsNotEmpty(totalSold, "Sales summary should not be empty.");
@@ -65,7 +65,7 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void FilterTransactionsByDateTest()
         {
-            SalesSummary salesSummary = new SalesSummary(Fakes.GetFakeTransactions());
+            SalesSummary salesSummary = new SalesSummary(TestData.GetFakeTransactions());
             DateTime startDate = DateTime.Now.Subtract(new TimeSpan(days: 2, hours: 0, minutes:0, seconds: 0));
             List<Transaction> transactions = salesSummary.FilterTransactionsByDate(startDate);
             Assert.IsFalse(transactions.Any(t => t.Date < startDate), "Should have returned only transactions with date greater than starting date.");
@@ -85,7 +85,7 @@ namespace TransactionReportGenerator.Test
         [TestCase(12, 10)]
         public void GetStartOfQuarterTest(int month, int expectedResult)
         {
-            SalesSummary salesSummary = new SalesSummary(Fakes.GetFakeTransactions());
+            SalesSummary salesSummary = new SalesSummary(TestData.GetFakeTransactions());
             int startOfQuarter = salesSummary.GetStartOfQuarter(new DateTime(year: 2018, month: month, day: 15));
             Assert.AreEqual(expectedResult, startOfQuarter, $"Incorred quarter start date.");
         }
