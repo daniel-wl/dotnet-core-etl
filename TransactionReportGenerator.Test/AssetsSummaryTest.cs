@@ -31,5 +31,15 @@ namespace TransactionReportGenerator.Test
             Assert.IsNotNull(investorsForSally.SingleOrDefault(i => i == "Tom Test"), "Should have found investor Tom Test for rep Sally");
             Assert.IsNotNull(investorsForBob.SingleOrDefault(i => i == "Samantha Sample"), "Should have found investor SamanthaSample for rep Bob");
         }
+
+        [TestCase("John Doe", 0)]
+        [TestCase("Samantha Sample", -1)]
+        [TestCase("Tom Test", -1)]
+        public void GetNetAmountHeldForInvestorTest(string investor, double expectedResult)
+        {
+            AssetsSummary assetsSummary = new AssetsSummary(Fakes.GetFakeTransactions());
+            double netAmountHeld = assetsSummary.GetNetAmountHeldForInvestor(investor);
+            Assert.AreEqual(expectedResult, netAmountHeld, $"Incorrect amount held for investor {investor}.");
+        }
     }
 }
