@@ -34,11 +34,6 @@ namespace TransactionReportGenerator.BusinessLogic
             return output.ToString();
         }
 
-        internal static string [] GetUniqueSalesReps(List<Transaction> transactions)
-        {
-            return transactions.Select(t => t.SalesRepresentative).Distinct().ToArray();
-        }
-
         internal static Dictionary<string, List<string>> GetInvestorsByReps(List<Transaction> transactions)
         {
             Dictionary<string, List<string>> investorsByReps = new Dictionary<string, List<string>>();

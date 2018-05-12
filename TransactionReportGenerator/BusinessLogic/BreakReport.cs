@@ -73,14 +73,6 @@ namespace TransactionReportGenerator.BusinessLogic
             return sharesBought - sharesSold;
         }
 
-        public List<Transaction> GetTransactionsForFundByInvestor(string fund, string investor)
-        {
-            return Transactions.Where(t => t.Fund == fund && t.Investor == investor).ToList();
-        }
-
-        public List<string> GetFundsPerInvestor(string investor)
-        {
-            return Transactions.Where(t => t.Investor == investor).Select(t => t.Fund).Distinct().ToList();
-        }  
+        
     }
 }

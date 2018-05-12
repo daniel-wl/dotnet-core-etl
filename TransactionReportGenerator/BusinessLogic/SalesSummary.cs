@@ -88,22 +88,7 @@ namespace TransactionReportGenerator.BusinessLogic
 
             return totalSoldPerInvestor;
         }
-
-        internal static string[] GetUniqueInvestors(List<Transaction> transactions)
-        {
-            return transactions.Select(t => t.Investor).Distinct().ToArray();
-        }
-
-        internal static double[] GetSellAmountsForInvestor(string investor, List<Transaction> transactions)
-        {
-            return transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell).Select(t => t.Price).ToArray();
-        }
-
-        internal List<Transaction> FilterTransactionsByDate(DateTime startDate)
-        {
-            return Transactions.Where(t => t.Date >= startDate).ToList();
-        }
-
+        
         internal int GetStartOfQuarter(DateTime now)
         {
             /*
