@@ -58,5 +58,44 @@ namespace TransactionReportGenerator.Test
                 }
             };
         }
+
+        public static List<Transaction> GetFakeTransactionsWithNegativeShareBalances()
+        {
+            return new List<Transaction>
+            {
+                new Transaction
+                {
+                    Fund = "Fund 1",
+                    Shares = 10,
+                    Investor = "Investor A",
+                    Price = 10,
+                    TransactionType = TransactionType.Buy
+                },
+                new Transaction
+                {
+                    Fund = "Fund 2",
+                    Shares = 10,
+                    Investor = "Investor A",
+                    Price = 10,
+                    TransactionType = TransactionType.Buy
+                },
+                new Transaction
+                {
+                    Fund = "Fund 1",
+                    Shares = 10,
+                    Investor = "Investor A",
+                    Price = 10,
+                    TransactionType = TransactionType.Sell
+                },
+                new Transaction
+                {
+                    Fund = "Fund 1",
+                    Shares = 10,
+                    Investor = "Investor A",
+                    Price = 10,
+                    TransactionType = TransactionType.Sell
+                }
+            };
+        }
     }
 }
