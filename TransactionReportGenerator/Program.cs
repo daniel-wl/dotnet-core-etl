@@ -76,7 +76,7 @@ namespace TransactionReportGenerator
             switch(choice)
             {
                 case ConsoleKey.D1:
-                    SalesSummary salesSummary = new SalesSummary(csvFile);
+                    SalesSummary salesSummary = new SalesSummary(TransactionLoader.LoadTransactions(csvFile));
                     break;
                 case ConsoleKey.D2:
                     break;

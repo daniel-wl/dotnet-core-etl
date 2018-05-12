@@ -9,14 +9,19 @@ namespace TransactionReportGenerator.BusinessLogic
     {
         internal readonly List<Transaction> Transactions;
         
-        public SalesSummary(string csvFile)
+        public SalesSummary(List<Transaction> transactions)
         {
-            if(string.IsNullOrWhiteSpace(csvFile))
+            if(transactions == null)
             {
-                throw new ArgumentException("Can't be be null or empty!", nameof(csvFile));
+                throw new ArgumentNullException(nameof(transactions));
             }
 
-            Transactions = TransactionLoader.LoadTransactions(csvFile);
+            if(!transactions.Any())
+            {
+                throw new ArgumentException("Must have at least one transaction.", nameof(transactions));
+            }
+
+            Transactions = transactions;
         }
 
         public void GetInceptionToDateSummary()
