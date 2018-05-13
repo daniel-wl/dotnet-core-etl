@@ -18,7 +18,7 @@ namespace TransactionReportGenerator.Reports
             Dictionary<string, List<string>> investorsByReps = GetInvestorsByReps();            
             StringBuilder output = new StringBuilder();
 
-            output.AppendLine("********** Assets Summary **********");
+            output.Append("********** Assets Summary **********");
             
             foreach(var investorListForSalesRep in investorsByReps)
             {
@@ -26,7 +26,7 @@ namespace TransactionReportGenerator.Reports
                 output.AppendLine($"Assets held by investors for sales rep {investorListForSalesRep.Key}:");
                 foreach(var investor in investorListForSalesRep.Value)
                 {
-                    output.AppendLine($"Investor {investor}: ${GetNetAmountHeldForInvestor(investor)}");
+                    output.AppendLine($"* Investor {investor}: ${GetNetAmountHeldForInvestor(investor)}");
                 }
             }
 
