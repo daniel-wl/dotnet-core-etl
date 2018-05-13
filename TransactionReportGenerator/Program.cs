@@ -76,7 +76,7 @@ namespace TransactionReportGenerator
             switch(choice)
             {
                 case ConsoleKey.D1:
-                    PrintReport(new SalesSummary(TransactionLoader.LoadTransactions(csvFile)));
+                    PrintReport(new SalesReport(TransactionLoader.LoadTransactions(csvFile)));
                     break;
                 case ConsoleKey.D2:
                     PrintReport(new AssetReport(TransactionLoader.LoadTransactions(csvFile)));
