@@ -51,5 +51,10 @@ namespace TransactionReportGenerator.Reports
             double totalSold = transactionsForInvestor.Where(t => t.TransactionType ==  TransactionType.Sell).Select(t => t.Price).Sum();
             return totalSold - totalBought;
         }
+
+        internal string [] GetUniqueSalesReps()
+        {
+            return Transactions.Select(t => t.SalesRepresentative).Distinct().ToArray();
+        }
     }
 }

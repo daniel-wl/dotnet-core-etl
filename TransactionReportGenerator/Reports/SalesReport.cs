@@ -88,6 +88,16 @@ namespace TransactionReportGenerator.Reports
 
             return totalSoldPerInvestor;
         }
+
+        internal double[] GetSellAmountsForInvestor(string investor, List<Transaction> transactions)
+        {
+            return transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell).Select(t => t.Price).ToArray();
+        }
+
+        internal List<Transaction> FilterTransactionsByDate(DateTime startDate)
+        {
+            return Transactions.Where(t => t.Date >= startDate).ToList();
+        }
         
         internal int GetStartOfQuarter(DateTime now)
         {

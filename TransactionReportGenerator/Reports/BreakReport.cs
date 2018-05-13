@@ -70,5 +70,10 @@ namespace TransactionReportGenerator.Reports
             double sharesSold = transactions.Where(t => t.TransactionType == TransactionType.Sell).Select(t => t.Shares).Sum();
             return sharesBought - sharesSold;
         }
+
+        internal List<Transaction> GetTransactionsForFundByInvestor(string fund, string investor)
+        {
+            return Transactions.Where(t => t.Fund == fund && t.Investor == investor).ToList();
+        }
     }
 }
