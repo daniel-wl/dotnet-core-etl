@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace TransactionReportGenerator.Test
 {
-    public class SalesSummaryTest
+    public class SalesReportTest
     {
         [Test]
         public void CreateSalesSummaryWithNullTransactionsTest()
