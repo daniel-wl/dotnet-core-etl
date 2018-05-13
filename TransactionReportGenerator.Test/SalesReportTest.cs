@@ -30,7 +30,8 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetUniqueInvestorsTest()
         {
-            string[] investors = SalesReport.GetUniqueInvestors(TestData.GetFakeTransactions());
+            SalesReport salesReport = new SalesReport(TestData.GetFakeTransactions());
+            string[] investors = salesReport.GetUniqueInvestors(TestData.GetFakeTransactions());
             Assert.AreEqual(investors.Length, 3, "Incorrect number of unique investors");
             Assert.IsNotNull(investors.SingleOrDefault(i => i == "John Doe"), "Investor John Doe not found.");
             Assert.IsNotNull(investors.SingleOrDefault(i => i == "Samantha Sample"), "Investor Samantha Sample not found.");
@@ -40,7 +41,8 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetSellAmountsPerInvestorTestTest()
         {
-            double[] sellAmounts = SalesReport.GetSellAmountsForInvestor("John Doe", TestData.GetFakeTransactions());
+            SalesReport salesReport = new SalesReport(TestData.GetFakeTransactions());
+            double[] sellAmounts = salesReport.GetSellAmountsForInvestor("John Doe", TestData.GetFakeTransactions());
             Assert.AreEqual(2, sellAmounts.Length, "Incorrect number of sale prices");
             Assert.IsNotNull(sellAmounts.SingleOrDefault(i => i == 1), "Expected sale price not found.");
             Assert.IsNotNull(sellAmounts.SingleOrDefault(i => i == 2), "Expected sale price not found.");
