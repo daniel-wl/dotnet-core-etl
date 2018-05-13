@@ -5,11 +5,11 @@ using TransactionReportGenerator.Models;
 
 namespace TransactionReportGenerator.Reports
 {
-    public abstract class SummaryBase
+    public abstract class ReportBase
     {
         internal readonly List<Transaction> Transactions;
         
-        protected SummaryBase(List<Transaction> transactions)
+        protected ReportBase(List<Transaction> transactions)
         {
             if(transactions == null)
             {

@@ -6,7 +6,7 @@ using TransactionReportGenerator.Models;
 
 namespace TransactionReportGenerator.Reports
 {
-    public class AssetsSummary : SummaryBase
+    public class AssetsSummary : ReportBase
     {
         public AssetsSummary(List<Transaction> transactions)
             : base (transactions)

@@ -6,7 +6,7 @@ using TransactionReportGenerator.Models;
 
 namespace TransactionReportGenerator.Reports
 {
-    public class BreakReport : SummaryBase
+    public class BreakReport : ReportBase
     {
         public BreakReport(List<Transaction> transactions)
             : base(transactions)
