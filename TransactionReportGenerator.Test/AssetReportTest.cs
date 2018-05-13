@@ -19,7 +19,8 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetInvestorsByRepTest()
         {
-            Dictionary<string, List<string>> investorsByRep = AssetReport.GetInvestorsByReps(TestData.GetFakeTransactions());
+            AssetReport assetReport = new AssetReport(TestData.GetFakeTransactions());
+            Dictionary<string, List<string>> investorsByRep = assetReport.GetInvestorsByReps();
             Assert.IsNotNull(investorsByRep, "GetInvestorsByReps should not return null.");
             Assert.IsNotEmpty(investorsByRep, "GetInvestorsByReps should not return empty collection for non-empty transaction list");
             Assert.AreEqual(2, investorsByRep.Count, "There are only two reps.");

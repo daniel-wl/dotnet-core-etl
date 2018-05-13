@@ -15,16 +15,15 @@ namespace TransactionReportGenerator.Reports
 
         public override string PrintToString()
         {
-            Dictionary<string, List<string>> investorsByReps = GetInvestorsByReps(Transactions);            
+            Dictionary<string, List<string>> investorsByReps = GetInvestorsByReps();            
             StringBuilder output = new StringBuilder();
 
             output.AppendLine("********** Assets Summary **********");
             
             foreach(var investorListForSalesRep in investorsByReps)
             {
-                string salesRep = investorListForSalesRep.Key;
                 output.AppendLine();
-                output.AppendLine($"Assets held by investors for sales rep {salesRep}:");
+                output.AppendLine($"Assets held by investors for sales rep {investorListForSalesRep.Key}:");
                 foreach(var investor in investorListForSalesRep.Value)
                 {
                     output.AppendLine($"Investor {investor}: ${GetNetAmountHeldForInvestor(investor)}");
@@ -34,12 +33,12 @@ namespace TransactionReportGenerator.Reports
             return output.ToString();
         }
 
-        internal static Dictionary<string, List<string>> GetInvestorsByReps(List<Transaction> transactions)
+        internal Dictionary<string, List<string>> GetInvestorsByReps()
         {
             Dictionary<string, List<string>> investorsByReps = new Dictionary<string, List<string>>();
-            foreach(string salesRep in GetUniqueSalesReps(transactions))
+            foreach(string salesRep in GetUniqueSalesReps(Transactions))
             {
-                investorsByReps.Add(salesRep, transactions.Where(t => t.SalesRepresentative == salesRep).Select(t => t.Investor).Distinct().ToList());
+                investorsByReps.Add(salesRep, Transactions.Where(t => t.SalesRepresentative == salesRep).Select(t => t.Investor).Distinct().ToList());
             }
 
             return investorsByReps;
