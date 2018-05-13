@@ -12,6 +12,8 @@ namespace TransactionReportGenerator
     {
         public static int Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+
             if(args.Length != 1)
             {
                 Console.WriteLine("Usage: dotnet run PathToCsv");
@@ -32,14 +34,16 @@ namespace TransactionReportGenerator
 
         public static void RunMenuLoop(string csvFile)
         {
-            ConsoleKey choice;            
+            ConsoleKey choice; 
+            List<Transaction> transactions = TransactionLoader.LoadTransactions(csvFile);
+            
             PrintTitle();
 
             do
             {
                 PrintMenu();
                 choice = GetInput();
-                RunBusinessLogic(choice, csvFile);
+                RunBusinessLogic(choice, transactions);
             }
             while(choice != ConsoleKey.D0);
         }
@@ -72,21 +76,21 @@ namespace TransactionReportGenerator
             return input;
         }
 
-        public static void RunBusinessLogic(ConsoleKey choice, string csvFile)
+        public static void RunBusinessLogic(ConsoleKey choice, List<Transaction> transactions)
         {
             switch(choice)
             {
                 case ConsoleKey.D1:
-                    PrintReport(new SalesReport(TransactionLoader.LoadTransactions(csvFile)));
+                    PrintReport(new SalesReport(transactions));
                     break;
                 case ConsoleKey.D2:
-                    PrintReport(new AssetReport(TransactionLoader.LoadTransactions(csvFile)));
+                    PrintReport(new AssetReport(transactions));
                     break;
                 case ConsoleKey.D3:
-                    PrintReport(new BreakReport(TransactionLoader.LoadTransactions(csvFile)));
+                    PrintReport(new BreakReport(transactions));
                     break;
                 case ConsoleKey.D4:
-                    PrintReport(new ProfitReport(TransactionLoader.LoadTransactions(csvFile)));
+                    PrintReport(new ProfitReport(transactions));
                     break;
                 case ConsoleKey.D0:
                     Console.WriteLine("Goodbye.");
@@ -102,6 +106,13 @@ namespace TransactionReportGenerator
             Console.WriteLine(report.PrintToString());
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
+        }
+
+        public static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+        {
+            Console.WriteLine("Fatal error. Aborting.");
+            Console.WriteLine($"Reason: {((Exception)args.ExceptionObject).Message}");
+            Environment.Exit(-1);
         }
     }
 }

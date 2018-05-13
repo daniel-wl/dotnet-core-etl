@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace TransactionReportGenerator
         {
             CsvReader csvReader = new CsvReader(File.OpenText(pathToCsvFile));
             csvReader.Configuration.RegisterClassMap<TransactionMap>();
+            csvReader.Configuration.DetectColumnCountChanges = true;
             return csvReader;
         }
     }
