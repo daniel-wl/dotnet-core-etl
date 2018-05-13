@@ -15,5 +15,13 @@ namespace TransactionReportGenerator.Test
             Assert.AreEqual(-2, netCashBalance["Fund 1"]);
             Assert.AreEqual(2, netCashBalance["Fund 2"]);
         }
+
+        [Test]
+        public void GetCashBalanceForFundAndInvestorTest()
+        {
+            ProfitReport profitReport = new ProfitReport(TestData.GetFakeTransactions());
+            double cashBalance = profitReport.GetCashBalanceForFundAndInvestor("Fund 1", "John Doe");          
+            Assert.AreEqual(-2, cashBalance);
+        }
     }
 }
