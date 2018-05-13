@@ -76,28 +76,16 @@ namespace TransactionReportGenerator
             switch(choice)
             {
                 case ConsoleKey.D1:
-                    SalesSummary salesSummary = new SalesSummary(TransactionLoader.LoadTransactions(csvFile));
-                    Console.WriteLine(salesSummary.PrintToString());
-                    Console.WriteLine("Press any key to continue.");
-                    Console.ReadKey();
+                    PrintReport(new SalesSummary(TransactionLoader.LoadTransactions(csvFile)));
                     break;
                 case ConsoleKey.D2:
-                    AssetReport assetReport = new AssetReport(TransactionLoader.LoadTransactions(csvFile));
-                    Console.WriteLine(assetReport.PrintToString());
-                    Console.WriteLine("Press any key to continue.");
-                    Console.ReadKey();
+                    PrintReport(new AssetReport(TransactionLoader.LoadTransactions(csvFile)));
                     break;
                 case ConsoleKey.D3:
-                    BreakReport breakReport = new BreakReport(TransactionLoader.LoadTransactions(csvFile));
-                    Console.WriteLine(breakReport.PrintToString());
-                    Console.WriteLine("Press any key to continue.");
-                    Console.ReadKey();
+                    PrintReport(new BreakReport(TransactionLoader.LoadTransactions(csvFile)));
                     break;
                 case ConsoleKey.D4:
-                    ProfitReport profitReport = new ProfitReport(TransactionLoader.LoadTransactions(csvFile));
-                    Console.WriteLine(profitReport.PrintToString());
-                    Console.WriteLine("Press any key to continue.");
-                    Console.ReadKey();
+                    PrintReport(new ProfitReport(TransactionLoader.LoadTransactions(csvFile)));
                     break;
                 case ConsoleKey.D0:
                     Console.WriteLine("Goodbye.");
@@ -106,6 +94,13 @@ namespace TransactionReportGenerator
                     Console.WriteLine("Invalid selection. Please try again.");
                     break;
             }
+        }
+
+        public static void PrintReport(ReportBase report)
+        {
+            Console.WriteLine(report.PrintToString());
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
         }
     }
 }
