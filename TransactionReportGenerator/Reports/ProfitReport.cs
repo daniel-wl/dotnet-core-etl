@@ -17,21 +17,36 @@ namespace TransactionReportGenerator.Reports
         {            
             StringBuilder output = new StringBuilder();
             
-            output.AppendLine("********** Profit  Report **********");
+            output.Append("********** Profit  Report **********");
             foreach(var investor in GetUniqueInvestors(Transactions))
             {
                 var netCashBalancePerFund = GetNetCashBalancePerFundByInvestor(investor);
                 if(netCashBalancePerFund.Any())
                 {
-                    output.AppendLine($"Profit per fund for investor {investor}:");
+                    output.AppendLine();
+                    output.AppendLine($"Profit per fund for investor '{investor}':");
                     foreach(var cashBalanceForFund in netCashBalancePerFund)
                     {
-                        output.AppendLine($"Fund {cashBalanceForFund.Key} has net balance ${cashBalanceForFund.Value}.");
+                        output.AppendLine($"Fund {cashBalanceForFund.Key} {PrintProfitOrLoss(cashBalanceForFund.Value)}.");
                     }
                 }
             }
 
             return output.ToString();
+        }
+
+        private string PrintProfitOrLoss(double balance)
+        {
+            if(balance > 0)
+            {
+                return $"made ${balance}";
+            }
+            else if (balance < 0)
+            {
+                return $"lost ${balance * -1}";
+            }
+            
+            return "broke even";
         }
 
         public Dictionary<string, double> GetNetCashBalancePerFundByInvestor(string investor)
