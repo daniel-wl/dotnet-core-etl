@@ -49,7 +49,7 @@ namespace TransactionReportGenerator.Reports
             return "broke even";
         }
 
-        public Dictionary<string, double> GetNetCashBalancePerFundByInvestor(string investor)
+        internal Dictionary<string, double> GetNetCashBalancePerFundByInvestor(string investor)
         {
             Dictionary<string, double> cashBalances = new Dictionary<string, double>();
             List<string> funds = GetFundsPerInvestor(investor);
@@ -61,7 +61,7 @@ namespace TransactionReportGenerator.Reports
             return cashBalances;
         }
 
-        public double GetCashBalanceForFundAndInvestor(string fund, string investor)
+        internal double GetCashBalanceForFundAndInvestor(string fund, string investor)
         {
             List<Transaction> transactionsForInvestorAndFund = Transactions.Where(t => t.Fund == fund && t.Investor == investor).ToList();
             double totalBought = transactionsForInvestorAndFund.Where(t => t.TransactionType ==  TransactionType.Buy).Select(t => t.Price).Sum();

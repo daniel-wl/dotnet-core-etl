@@ -36,7 +36,7 @@ namespace TransactionReportGenerator.Reports
         internal Dictionary<string, List<string>> GetInvestorsByReps()
         {
             Dictionary<string, List<string>> investorsByReps = new Dictionary<string, List<string>>();
-            foreach(string salesRep in GetUniqueSalesReps(Transactions))
+            foreach(string salesRep in GetUniqueSalesReps())
             {
                 investorsByReps.Add(salesRep, Transactions.Where(t => t.SalesRepresentative == salesRep).Select(t => t.Investor).Distinct().ToList());
             }

@@ -7,7 +7,7 @@ namespace TransactionReportGenerator.Reports
 {
     public abstract class ReportBase
     {
-        internal readonly List<Transaction> Transactions;
+        protected readonly List<Transaction> Transactions;
         
         protected ReportBase(List<Transaction> transactions)
         {
@@ -36,12 +36,12 @@ namespace TransactionReportGenerator.Reports
             return Transactions.Where(t => t.Investor == investor).Select(t => t.Fund).Distinct().ToList();
         }  
 
-        internal static string[] GetUniqueInvestors(List<Transaction> transactions)
+        internal string[] GetUniqueInvestors(List<Transaction> transactions)
         {
             return transactions.Select(t => t.Investor).Distinct().ToArray();
         }
 
-        internal static double[] GetSellAmountsForInvestor(string investor, List<Transaction> transactions)
+        internal double[] GetSellAmountsForInvestor(string investor, List<Transaction> transactions)
         {
             return transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell).Select(t => t.Price).ToArray();
         }
@@ -51,9 +51,9 @@ namespace TransactionReportGenerator.Reports
             return Transactions.Where(t => t.Date >= startDate).ToList();
         }
 
-        internal static string [] GetUniqueSalesReps(List<Transaction> transactions)
+        internal string [] GetUniqueSalesReps()
         {
-            return transactions.Select(t => t.SalesRepresentative).Distinct().ToArray();
+            return Transactions.Select(t => t.SalesRepresentative).Distinct().ToArray();
         }
     }
 }

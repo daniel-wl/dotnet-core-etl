@@ -43,12 +43,12 @@ namespace TransactionReportGenerator.Reports
             return output.ToString();
         }
 
-        public double GetCashBalanceForInvestor(string investor)
+        internal double GetCashBalanceForInvestor(string investor)
         {
             return new AssetReport(Transactions).GetNetAmountHeldForInvestor(investor);
         }
 
-        public Dictionary<string, double> GetFundsWithNegativeShareBalanceForInvestor(string investor)
+        internal Dictionary<string, double> GetFundsWithNegativeShareBalanceForInvestor(string investor)
         {
             Dictionary<string, double> fundsWithNegativeShareBalances = new Dictionary<string, double>();
             foreach(string fund in GetFundsPerInvestor(investor))
@@ -63,7 +63,7 @@ namespace TransactionReportGenerator.Reports
             return fundsWithNegativeShareBalances;
         }
 
-        public double GetShareBalanceForFundByInvestor(string fund, string investor)
+        internal double GetShareBalanceForFundByInvestor(string fund, string investor)
         {
             List<Transaction> transactions = GetTransactionsForFundByInvestor(fund, investor);
             double sharesBought = transactions.Where(t => t.TransactionType == TransactionType.Buy).Select(t => t.Shares).Sum();
