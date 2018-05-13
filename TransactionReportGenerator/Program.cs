@@ -68,6 +68,7 @@ namespace TransactionReportGenerator
             Console.Write("Please enter a number corresponding to your menu choice: ");
             ConsoleKey input =  Console.ReadKey().Key;
             Console.WriteLine();
+            Console.WriteLine();
             return input;
         }
 
