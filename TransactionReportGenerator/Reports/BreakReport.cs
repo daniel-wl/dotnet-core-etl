@@ -46,8 +46,7 @@ namespace TransactionReportGenerator.Reports
 
         public double GetCashBalanceForInvestor(string investor)
         {
-            AssetsSummary assetsSummary = new AssetsSummary(Transactions);
-            return assetsSummary.GetNetAmountHeldForInvestor(investor);
+            return new AssetReport(Transactions).GetNetAmountHeldForInvestor(investor);
         }
 
         public Dictionary<string, double> GetFundsWithNegativeShareBalanceForInvestor(string investor)

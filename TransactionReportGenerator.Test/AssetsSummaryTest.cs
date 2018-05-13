@@ -10,7 +10,7 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetUniqueSalesRepsTest()
         {
-            string[] salesReps = AssetsSummary.GetUniqueSalesReps(TestData.GetFakeTransactions());
+            string[] salesReps = AssetReport.GetUniqueSalesReps(TestData.GetFakeTransactions());
             Assert.AreEqual(salesReps.Length, 2, "Incorrect number of unique investors");
             Assert.IsNotNull(salesReps.SingleOrDefault(i => i == "Sally"), "Sales rep Sally not found.");
             Assert.IsNotNull(salesReps.SingleOrDefault(i => i == "Bob"), "Sales rep Bob not found.");
@@ -19,7 +19,7 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetInvestorsByRepTest()
         {
-            Dictionary<string, List<string>> investorsByRep = AssetsSummary.GetInvestorsByReps(TestData.GetFakeTransactions());
+            Dictionary<string, List<string>> investorsByRep = AssetReport.GetInvestorsByReps(TestData.GetFakeTransactions());
             Assert.IsNotNull(investorsByRep, "GetInvestorsByReps should not return null.");
             Assert.IsNotEmpty(investorsByRep, "GetInvestorsByReps should not return empty collection for non-empty transaction list");
             Assert.AreEqual(2, investorsByRep.Count, "There are only two reps.");
@@ -37,8 +37,8 @@ namespace TransactionReportGenerator.Test
         [TestCase("Tom Test", 1)]
         public void GetNetAmountHeldForInvestorTest(string investor, double expectedResult)
         {
-            AssetsSummary assetsSummary = new AssetsSummary(TestData.GetFakeTransactions());
-            double netAmountHeld = assetsSummary.GetNetAmountHeldForInvestor(investor);
+            AssetReport assetReport = new AssetReport(TestData.GetFakeTransactions());
+            double netAmountHeld = assetReport.GetNetAmountHeldForInvestor(investor);
             Assert.AreEqual(expectedResult, netAmountHeld, $"Incorrect amount held for investor {investor}.");
         }
     }

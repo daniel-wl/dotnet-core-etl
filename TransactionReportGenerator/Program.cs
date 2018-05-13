@@ -82,8 +82,8 @@ namespace TransactionReportGenerator
                     Console.ReadKey();
                     break;
                 case ConsoleKey.D2:
-                    AssetsSummary assetsSummary = new AssetsSummary(TransactionLoader.LoadTransactions(csvFile));
-                    Console.WriteLine(assetsSummary.PrintToString());
+                    AssetReport assetReport = new AssetReport(TransactionLoader.LoadTransactions(csvFile));
+                    Console.WriteLine(assetReport.PrintToString());
                     Console.WriteLine("Press any key to continue.");
                     Console.ReadKey();
                     break;
