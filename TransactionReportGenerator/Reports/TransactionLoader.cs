@@ -4,7 +4,7 @@ using System.Linq;
 using CsvHelper;
 using TransactionReportGenerator.Models;
 
-namespace TransactionReportGenerator.BusinessLogic
+namespace TransactionReportGenerator.Reports
 {
     public static class TransactionLoader
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using NUnit.Framework;
 using TransactionReportGenerator;
-using TransactionReportGenerator.BusinessLogic;
+using TransactionReportGenerator.Reports;
 
 namespace TransactionReportGenerator.Test
 {

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using TransactionReportGenerator.BusinessLogic;
+using TransactionReportGenerator.Reports;
 using TransactionReportGenerator.Models;
 
 namespace TransactionReportGenerator.Test

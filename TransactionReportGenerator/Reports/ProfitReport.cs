@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using TransactionReportGenerator.Models;
 
-namespace TransactionReportGenerator.BusinessLogic
+namespace TransactionReportGenerator.Reports
 {
     public class ProfitReport : SummaryBase
     {

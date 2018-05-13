@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using TransactionReportGenerator.BusinessLogic;
+using TransactionReportGenerator.Reports;
 
 namespace TransactionReportGenerator.Test
 {

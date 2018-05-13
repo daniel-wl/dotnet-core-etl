@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TransactionReportGenerator.Models;
 
-namespace TransactionReportGenerator.BusinessLogic
+namespace TransactionReportGenerator.Reports
 {
     public abstract class SummaryBase
     {

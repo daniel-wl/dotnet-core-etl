@@ -1,4 +1,4 @@
-using TransactionReportGenerator.BusinessLogic;
+using TransactionReportGenerator.Reports;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
