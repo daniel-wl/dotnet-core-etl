@@ -18,31 +18,31 @@ namespace TransactionReportGenerator.Reports
             StringBuilder output = new StringBuilder();
 
             output.AppendLine("********** Sales  Summary **********");
-            output.AppendLine("Year to date:");
+            output.AppendLine("/// Year to date: ///");
             foreach(var investor in GetYearToDateSalesPerInvestor())
             {
-                output.AppendLine($"Investor {investor.Key} sold ${investor.Value}.");
+                output.AppendLine($"Investor '{investor.Key}' sold ${investor.Value}.");
             }
 
             output.AppendLine();
-            output.AppendLine("Quarter to date:");
+            output.AppendLine("/// Quarter to date: ///");
             foreach(var investor in GetQuarterToDateSalesPerInvestor())
             {
-                output.AppendLine($"Investor {investor.Key} sold ${investor.Value}.");
+                output.AppendLine($"Investor '{investor.Key}' sold ${investor.Value}.");
             }
 
             output.AppendLine();
-            output.AppendLine("Month to date:");
+            output.AppendLine("/// Month to date: ///");
             foreach(var investor in GetMonthToDateSalesPerInvestor())
             {
-                output.AppendLine($"Investor {investor.Key} sold ${investor.Value}.");
+                output.AppendLine($"Investor '{investor.Key}' sold ${investor.Value}.");
             }
             
             output.AppendLine();
-            output.AppendLine("Inception to date:");
+            output.AppendLine("/// Inception to date: ///");
             foreach(var investor in GetInceptionToDateSalesPerInvestor())
             {
-                output.AppendLine($"Investor {investor.Key} sold ${investor.Value}.");
+                output.AppendLine($"Investor '{investor.Key}' sold ${investor.Value}.");
             }
 
             return output.ToString();
