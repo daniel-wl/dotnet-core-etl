@@ -9,7 +9,7 @@ namespace TransactionReportGenerator.Test
     {
         public static List<Transaction> GetRealTransactionsFromCsv()
         {
-            return TransactionLoader.LoadTransactions("../../../../TransactionReportGenerator/Data.csv");
+            return TransactionLoader.LoadTransactions("../../../../TransactionReportGenerator/TestFiles/GoldenData.csv");
         }
 
         public static List<Transaction> GetFakeTransactions()
@@ -18,6 +18,7 @@ namespace TransactionReportGenerator.Test
             {
                 new Transaction
                 {
+                    Fund = "Fund 1",
                     Investor = "John Doe",
                     Price = 1,
                     TransactionType = TransactionType.Sell,
@@ -26,6 +27,7 @@ namespace TransactionReportGenerator.Test
                 },
                 new Transaction
                 {
+                    Fund = "Fund 1",
                     Investor = "Samantha Sample",
                     Price = 1,
                     TransactionType = TransactionType.Sell,
@@ -34,6 +36,7 @@ namespace TransactionReportGenerator.Test
                 },
                 new Transaction
                 {
+                    Fund = "Fund 2",
                     Investor = "John Doe",
                     Price = 2,
                     TransactionType = TransactionType.Sell,
@@ -42,6 +45,7 @@ namespace TransactionReportGenerator.Test
                 },
                 new Transaction
                 {
+                    Fund = "Fund 1",
                     Investor = "John Doe",
                     Price = 3,
                     TransactionType = TransactionType.Buy,
@@ -50,6 +54,7 @@ namespace TransactionReportGenerator.Test
                 },
                 new Transaction
                 {
+                    Fund = "Fund 1",
                     Investor = "Tom Test",
                     Price = 1,
                     TransactionType = TransactionType.Sell,
