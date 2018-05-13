@@ -10,7 +10,8 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetUniqueSalesRepsTest()
         {
-            string[] salesReps = AssetReport.GetUniqueSalesReps(TestData.GetFakeTransactions());
+            AssetReport assetReport = new AssetReport(TestData.GetFakeTransactions());
+            string[] salesReps = assetReport.GetUniqueSalesReps();
             Assert.AreEqual(salesReps.Length, 2, "Incorrect number of unique investors");
             Assert.IsNotNull(salesReps.SingleOrDefault(i => i == "Sally"), "Sales rep Sally not found.");
             Assert.IsNotNull(salesReps.SingleOrDefault(i => i == "Bob"), "Sales rep Bob not found.");
