@@ -38,6 +38,12 @@ namespace TransactionReportGenerator.Reports
                         output.AppendLine($"  * Fund {fund.Key} has share balance of {fund.Value}.");
                     }
                 }
+
+                List<Transaction> transactionsWithFutureDates = GetTransactionsForInvestorWithFutureDates(investor);
+                foreach(var futureTransaction in transactionsWithFutureDates)
+                {
+                    output.AppendLine($"  * Transaction for fund {futureTransaction.Fund} occurs on date {futureTransaction.Date} which is in the future.");
+                }
             }
 
             return output.ToString();
@@ -61,6 +67,11 @@ namespace TransactionReportGenerator.Reports
             }
 
             return fundsWithNegativeShareBalances;
+        }
+
+        internal List<Transaction> GetTransactionsForInvestorWithFutureDates(string investor)
+        {
+            return Transactions.Where(t => t.Investor == investor && t.Date > DateTime.Now).ToList();
         }
 
         internal double GetShareBalanceForFundByInvestor(string fund, string investor)

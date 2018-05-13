@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using NUnit.Framework;
 using TransactionReportGenerator.Reports;
@@ -42,6 +43,22 @@ namespace TransactionReportGenerator.Test
             Assert.AreEqual(1, funds.Count, "Should have found 1 fund with negative share balance");
             Assert.DoesNotThrow(() => funds.Single(f => f.Key == "Fund 1"), "Should have returned Fund 1.");
             Assert.AreEqual(-10, funds.Single(f => f.Key == "Fund 1").Value, "Fund 1 balance is incorrect");
+        }
+
+        [Test]
+        public void GetCashBalanceForInvestorTest()
+        {
+            BreakReport breakReport = new BreakReport(TestData.GetFakeTransactionsWithNegativeShareBalances());
+            double cashBalance = breakReport.GetCashBalanceForInvestor("Investor A");
+            Assert.AreEqual(0, cashBalance, "Incorrect cash balance for Investor A across all funds.");            
+        }
+
+        [Test]
+        public void GetTransactionsForInvestorWithFutureDatesTest()
+        {
+            BreakReport breakReport = new BreakReport(TestData.GetFakeTransactionsWithNegativeShareBalances());
+            var futureTransactions = breakReport.GetTransactionsForInvestorWithFutureDates("Investor A");
+            Assert.AreEqual(1, futureTransactions.Count, "Incorrect number of future transactions found");
         }
     }
 }

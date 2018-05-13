@@ -98,7 +98,8 @@ namespace TransactionReportGenerator.Test
                     Shares = 10,
                     Investor = "Investor A",
                     Price = 10,
-                    TransactionType = TransactionType.Sell
+                    TransactionType = TransactionType.Sell,
+                    Date = DateTime.Now.Add(new TimeSpan(24, 0, 0))
                 }
             };
         }
