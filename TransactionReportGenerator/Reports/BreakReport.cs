@@ -17,28 +17,27 @@ namespace TransactionReportGenerator.Reports
         {
             StringBuilder output = new StringBuilder();
 
-            output.AppendLine("*********** Break Report ***********");
+            output.Append("*********** Break Report ***********");
             
             foreach(var investor in Transactions.Select(t => t.Investor).Distinct())
             {
+                output.AppendLine();
+                output.AppendLine($"/// Break Report for investor '{investor}'");
                 double cashBalance = GetCashBalanceForInvestor(investor);
                 if(cashBalance < 0)
                 {
-                    output.AppendLine($"Investor {investor} has negative cash balance of ${cashBalance}");
+                    output.AppendLine($"* Investor '{investor}' has negative cash balance of ${cashBalance}");
                 }
 
                 var fundsWithNegativeShareBalance = GetFundsWithNegativeShareBalanceForInvestor(investor);
                 if(fundsWithNegativeShareBalance.Any())
                 {
-                    output.AppendLine();
-                    output.AppendLine($"Investor {investor} has negative share balance in the following accounts:");
+                    output.AppendLine($"* Investor {investor} has negative share balance in the following accounts:");
                     foreach(var fund in fundsWithNegativeShareBalance)
                     {
-                        output.AppendLine($"Fund {fund.Key} has share balance of {fund.Value}.");
+                        output.AppendLine($"  * Fund {fund.Key} has share balance of {fund.Value}.");
                     }
                 }
-
-                output.AppendLine();
             }
 
             return output.ToString();
