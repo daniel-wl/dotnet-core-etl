@@ -8,15 +8,17 @@ namespace TransactionReportGenerator.Reports
     public abstract class ReportBase
     {
         protected readonly List<Transaction> Transactions;
-        
+
+        protected ReportBase() { }
+
         protected ReportBase(List<Transaction> transactions)
         {
-            if(transactions == null)
+            if (transactions == null)
             {
                 throw new ArgumentNullException(nameof(transactions));
             }
 
-            if(!transactions.Any())
+            if (!transactions.Any())
             {
                 throw new ArgumentException("Must have at least one transaction.", nameof(transactions));
             }
@@ -29,7 +31,7 @@ namespace TransactionReportGenerator.Reports
         internal List<string> GetFundsPerInvestor(string investor)
         {
             return Transactions.Where(t => t.Investor == investor).Select(t => t.Fund).Distinct().ToList();
-        }  
+        }
 
         internal string[] GetUniqueInvestors(List<Transaction> transactions)
         {

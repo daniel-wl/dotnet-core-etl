@@ -1,52 +1,62 @@
-using TransactionReportGenerator.Reports;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using TransactionReportGenerator.Models;
 using System.Linq;
+using Bogus;
+using FluentAssertions;
+using Moq;
+using NUnit.Framework;
+using TransactionReportGenerator.Models;
+using TransactionReportGenerator.Reports;
 
 namespace TransactionReportGenerator.Test
 {
     public class SalesReportTest
     {
+        public static Faker Faker = new Faker();
+
         [Test]
         public void CreateSalesSummaryWithNullTransactionsTest()
         {
-            Assert.Throws<ArgumentNullException>(() => new SalesReport(null), "Creating a sales summary with null transactions should throw");
+            Action createSalesReportWithNullTransactionsList = () => new SalesReport(null);
+            createSalesReportWithNullTransactionsList.Should().Throw<ArgumentNullException>("creating a sales summary with null transactions should throw");
         }
 
         [Test]
         public void CreateSalesSummaryWithEmptyTransactionsTest()
         {
-            Assert.Throws<ArgumentException>(() => new SalesReport(new List<Transaction>()), "Creating a sales summary with empty transactions should throw");
+            Action createSalesReportWithEmptyTransactionsList = () => new SalesReport(new List<Transaction>());
+            createSalesReportWithEmptyTransactionsList.Should().Throw<ArgumentException>("creating a sales summary with empty transactions should throw");
         }
 
         [Test]
         public void CreateSalesSummaryWithTransactionsTest()
         {
-            Assert.DoesNotThrow(() => new SalesReport(new List<Transaction>(TestData.GetFakeTransactions())), "Creating a sales summary with a non-empty transaction list should not throw.");
+            Action createSalesReportWithNonEmptyTransactionsList = () => new SalesReport(new TransactionFactory().Build(3));
+            createSalesReportWithNonEmptyTransactionsList.Should().NotThrow("creating a sales summary with a non-empty transaction list should not throw.");
         }
 
         [Test]
         public void GetUniqueInvestorsTest()
         {
-            SalesReport salesReport = new SalesReport(TestData.GetFakeTransactions());
-            string[] investors = salesReport.GetUniqueInvestors(TestData.GetFakeTransactions());
-            Assert.AreEqual(investors.Length, 3, "Incorrect number of unique investors");
-            Assert.IsNotNull(investors.SingleOrDefault(i => i == "John Doe"), "Investor John Doe not found.");
-            Assert.IsNotNull(investors.SingleOrDefault(i => i == "Samantha Sample"), "Investor Samantha Sample not found.");
-            Assert.IsNotNull(investors.SingleOrDefault(i => i == "Tom Test"), "Investor Tom Test not found.");
+            SalesReport salesReport = Mock.Of<SalesReport>();
+            int numberOfTransactions = Faker.Random.Int(1, 100);
+            string[] result = salesReport.GetUniqueInvestors(new TransactionFactory().Build(numberOfTransactions));
+            result.Distinct().Should().HaveCount(numberOfTransactions);
         }
 
         [Test]
         public void GetSellAmountsPerInvestorTestTest()
         {
-            SalesReport salesReport = new SalesReport(TestData.GetFakeTransactions());
-            double[] sellAmounts = salesReport.GetSellAmountsForInvestor("John Doe", TestData.GetFakeTransactions());
-            Assert.AreEqual(2, sellAmounts.Length, "Incorrect number of sale prices");
-            Assert.IsNotNull(sellAmounts.SingleOrDefault(i => i == 1), "Expected sale price not found.");
-            Assert.IsNotNull(sellAmounts.SingleOrDefault(i => i == 2), "Expected sale price not found.");
-            Assert.Throws<InvalidOperationException>(() => sellAmounts.Single(i => i == 3), "Price for buy transaction should not be included.");
+            SalesReport salesReport = Mock.Of<SalesReport>();
+            int numberOfTransactions = Faker.Random.Int(1, 100);
+            List<Transaction> transactions = new TransactionFactory()
+                .WithPrice(() => numberOfTransactions)
+                .WithInvestor(() => "John Doe")
+                .WithTransactionType(() => TransactionType.Sell)
+                .Build(numberOfTransactions);
+            double[] result = salesReport.GetSellAmountsForInvestor("John Doe", transactions);
+            result.Should().HaveCount(numberOfTransactions);
+            Enumerable.Sum(result).Should().Be(Enumerable.Sum(transactions.Select(t => t.Price)));
         }
 
         [Test]
@@ -68,7 +78,7 @@ namespace TransactionReportGenerator.Test
         public void FilterTransactionsByDateTest()
         {
             SalesReport salesSummary = new SalesReport(TestData.GetFakeTransactions());
-            DateTime startDate = DateTime.Now.Subtract(new TimeSpan(days: 2, hours: 0, minutes:0, seconds: 0));
+            DateTime startDate = DateTime.Now.Subtract(new TimeSpan(days: 2, hours: 0, minutes: 0, seconds: 0));
             List<Transaction> transactions = salesSummary.FilterTransactionsByDate(startDate);
             Assert.IsFalse(transactions.Any(t => t.Date < startDate), "Should have returned only transactions with date greater than starting date.");
         }

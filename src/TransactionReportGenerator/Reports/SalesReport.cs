@@ -8,10 +8,9 @@ namespace TransactionReportGenerator.Reports
 {
     public class SalesReport : ReportBase
     {
-        public SalesReport(List<Transaction> transactions)
-            : base (transactions)
-        {
-        }
+        public SalesReport() { }
+
+        public SalesReport(List<Transaction> transactions) : base(transactions) { }
 
         public override string PrintToString()
         {
@@ -19,28 +18,28 @@ namespace TransactionReportGenerator.Reports
 
             output.AppendLine("********** Sales  Summary **********");
             output.AppendLine("/// Year to date: ///");
-            foreach(var investor in GetYearToDateSalesPerInvestor())
+            foreach (var investor in GetYearToDateSalesPerInvestor())
             {
                 output.AppendLine($"Investor '{investor.Key}' sold ${investor.Value}.");
             }
 
             output.AppendLine();
             output.AppendLine("/// Quarter to date: ///");
-            foreach(var investor in GetQuarterToDateSalesPerInvestor())
+            foreach (var investor in GetQuarterToDateSalesPerInvestor())
             {
                 output.AppendLine($"Investor '{investor.Key}' sold ${investor.Value}.");
             }
 
             output.AppendLine();
             output.AppendLine("/// Month to date: ///");
-            foreach(var investor in GetMonthToDateSalesPerInvestor())
+            foreach (var investor in GetMonthToDateSalesPerInvestor())
             {
                 output.AppendLine($"Investor '{investor.Key}' sold ${investor.Value}.");
             }
-            
+
             output.AppendLine();
             output.AppendLine("/// Inception to date: ///");
-            foreach(var investor in GetInceptionToDateSalesPerInvestor())
+            foreach (var investor in GetInceptionToDateSalesPerInvestor())
             {
                 output.AppendLine($"Investor '{investor.Key}' sold ${investor.Value}.");
             }
@@ -79,8 +78,8 @@ namespace TransactionReportGenerator.Reports
 
             List<Transaction> filteredTransactions = FilterTransactionsByDate(startDate);
             string[] investors = GetUniqueInvestors(filteredTransactions);
-            
-            foreach(string investor in investors)
+
+            foreach (string investor in investors)
             {
                 double totalSold = GetSellAmountsForInvestor(investor, filteredTransactions).Sum();
                 totalSoldPerInvestor.Add(investor, totalSold);
@@ -98,7 +97,7 @@ namespace TransactionReportGenerator.Reports
         {
             return Transactions.Where(t => t.Date >= startDate).ToList();
         }
-        
+
         internal int GetStartOfQuarter(DateTime now)
         {
             /*
@@ -110,17 +109,17 @@ namespace TransactionReportGenerator.Reports
              */
             int month = now.Month;
 
-            if(month <= 3)
+            if (month <= 3)
             {
                 return 1; //Jan
             }
 
-            if(month > 3 && month <=6)
+            if (month > 3 && month <= 6)
             {
                 return 4; //Apr
             }
 
-            if(month > 6 && month <= 9)
+            if (month > 6 && month <= 9)
             {
                 return 7; //Jul
             }

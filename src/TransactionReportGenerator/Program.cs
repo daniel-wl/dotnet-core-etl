@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using CsvHelper;
 using TransactionReportGenerator.Models;
 using TransactionReportGenerator.Reports;
 
@@ -14,14 +12,14 @@ namespace TransactionReportGenerator
         {
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
-            if(args.Length != 1)
+            if (args.Length != 1)
             {
                 Console.WriteLine("Usage: dotnet run PathToCsv");
                 return 1;
             }
 
             string csvFile = Path.GetFullPath(args[0]);
-            if(!File.Exists(csvFile))
+            if (!File.Exists(csvFile))
             {
                 Console.WriteLine($"File at {csvFile} does not exist.");
                 return 1;
@@ -34,9 +32,9 @@ namespace TransactionReportGenerator
 
         public static void RunMenuLoop(string csvFile)
         {
-            ConsoleKey choice; 
+            ConsoleKey choice;
             List<Transaction> transactions = TransactionLoader.LoadTransactions(csvFile);
-            
+
             PrintTitle();
 
             do
@@ -45,7 +43,7 @@ namespace TransactionReportGenerator
                 choice = GetInput();
                 RunBusinessLogic(choice, transactions);
             }
-            while(choice != ConsoleKey.D0);
+            while (choice != ConsoleKey.D0);
         }
 
         public static void PrintTitle()
@@ -70,7 +68,7 @@ namespace TransactionReportGenerator
         public static ConsoleKey GetInput()
         {
             Console.Write("Please enter a number corresponding to your menu choice: ");
-            ConsoleKey input =  Console.ReadKey().Key;
+            ConsoleKey input = Console.ReadKey().Key;
             Console.WriteLine();
             Console.WriteLine();
             return input;
@@ -78,7 +76,7 @@ namespace TransactionReportGenerator
 
         public static void RunBusinessLogic(ConsoleKey choice, List<Transaction> transactions)
         {
-            switch(choice)
+            switch (choice)
             {
                 case ConsoleKey.D1:
                     PrintReport(new SalesReport(transactions));
