@@ -7,7 +7,7 @@ namespace TransactionReportGenerator.Reports
 {
     public class AssetReport : ReportBase
     {
-        public AssetReport(List<Transaction> transactions) : base(transactions) { }
+        public AssetReport(IEnumerable<Transaction> transactions) : base(transactions) { }
 
         public override string PrintToString()
         {

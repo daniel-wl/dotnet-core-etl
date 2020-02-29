@@ -7,11 +7,11 @@ namespace TransactionReportGenerator.Reports
 {
     public abstract class ReportBase
     {
-        protected readonly List<Transaction> Transactions;
+        protected readonly IEnumerable<Transaction> Transactions;
 
         protected ReportBase() { }
 
-        protected ReportBase(List<Transaction> transactions)
+        protected ReportBase(IEnumerable<Transaction> transactions)
         {
             if (transactions == null)
             {

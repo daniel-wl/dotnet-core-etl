@@ -6,7 +6,7 @@ namespace TransactionReportGenerator.Reports
 {
     public class BreakReport : ReportBase
     {
-        public BreakReport(List<Transaction> transactions) : base(transactions) { }
+        public BreakReport(IEnumerable<Transaction> transactions) : base(transactions) { }
 
         public override string PrintToString()
         {

@@ -9,10 +9,10 @@ namespace TransactionReportGenerator
 {
     public static class TransactionLoader
     {
-        public static List<Transaction> LoadTransactions(string pathToCsvFile)
+        public static IEnumerable<Transaction> LoadTransactions(string pathToCsvFile)
         {
             CsvReader csvReader = GetCsvReader(pathToCsvFile);
-            return csvReader.GetRecords<Transaction>().ToList();
+            return csvReader.GetRecords<Transaction>().ToArray();
         }
 
         internal static CsvReader GetCsvReader(string pathToCsvFile)

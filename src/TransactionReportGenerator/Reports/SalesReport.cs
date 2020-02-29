@@ -10,11 +10,11 @@ namespace TransactionReportGenerator.Reports
     {
         public SalesReport() { }
 
-        public SalesReport(List<Transaction> transactions) : base(transactions) { }
+        public SalesReport(IEnumerable<Transaction> transactions) : base(transactions) { }
 
         public override string PrintToString()
         {
-            StringBuilder output = new StringBuilder();
+            var output = new StringBuilder();
 
             output.AppendLine("********** Sales  Summary **********");
             output.AppendLine("/// Year to date: ///");
@@ -49,7 +49,7 @@ namespace TransactionReportGenerator.Reports
 
         internal Dictionary<string, double> GetYearToDateSalesPerInvestor()
         {
-            DateTime beginningOfYear = new DateTime(year: DateTime.Now.Year, month: 1, day: 1);
+            var beginningOfYear = new DateTime(year: DateTime.Now.Year, month: 1, day: 1);
             return GetTotalSoldForDateRangePerInvestor(beginningOfYear);
         }
 
@@ -74,10 +74,9 @@ namespace TransactionReportGenerator.Reports
 
         internal Dictionary<string, double> GetTotalSoldForDateRangePerInvestor(DateTime startDate)
         {
-            Dictionary<string, double> totalSoldPerInvestor = new Dictionary<string, double>();
-
-            List<Transaction> filteredTransactions = FilterTransactionsByDate(startDate);
-            string[] investors = GetUniqueInvestors(filteredTransactions);
+            var totalSoldPerInvestor = new Dictionary<string, double>();
+            var filteredTransactions = FilterTransactionsByDate(startDate);
+            var investors = GetUniqueInvestors(filteredTransactions);
 
             foreach (string investor in investors)
             {
@@ -88,12 +87,12 @@ namespace TransactionReportGenerator.Reports
             return totalSoldPerInvestor;
         }
 
-        internal double[] GetSellAmountsForInvestor(string investor, List<Transaction> transactions)
+        internal IEnumerable<double> GetSellAmountsForInvestor(string investor, IEnumerable<Transaction> transactions)
         {
-            return transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell).Select(t => t.Price).ToArray();
+            return transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell).Select(t => t.Price);
         }
 
-        internal List<Transaction> FilterTransactionsByDate(DateTime startDate)
+        internal IEnumerable<Transaction> FilterTransactionsByDate(DateTime startDate)
         {
             return Transactions.Where(t => t.Date >= startDate).ToList();
         }
@@ -128,9 +127,9 @@ namespace TransactionReportGenerator.Reports
             return 10;
         }
 
-        internal string[] GetUniqueInvestors(List<Transaction> transactions)
+        internal IEnumerable<string> GetUniqueInvestors(IEnumerable<Transaction> transactions)
         {
-            return transactions.Select(t => t.Investor).Distinct().ToArray();
+            return transactions.Select(t => t.Investor).Distinct();
         }
     }
 }
