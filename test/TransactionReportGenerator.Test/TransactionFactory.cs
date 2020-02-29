@@ -14,6 +14,8 @@ namespace TransactionReportGenerator.Test
         private Func<TransactionType> _TransactionType = () => (TransactionType)Faker.Random.Int(0, 2);
         private Func<DateTime> _Date = () => Faker.Date.Recent();
         private Func<string> _SalesRep = () => Faker.Random.String2(Faker.Random.Int(0, 100));
+        private Func<string> _Fund = () => Faker.Random.String2(Faker.Random.Int(0, 100));
+        private Func<double> _Shares = () => Faker.Random.Double(0, double.MaxValue);
 
         public List<Transaction> Build(int numberOfTransactions) =>
             Enumerable.Range(0, numberOfTransactions).Select(i => Build()).ToList();
@@ -22,9 +24,9 @@ namespace TransactionReportGenerator.Test
         {
             Date = _Date(),
             TransactionType = _TransactionType(),
-            Shares = Faker.Random.Double(0, double.MaxValue),
+            Shares = _Shares(),
             Price = _Price(),
-            Fund = Faker.Random.String2(Faker.Random.Int(0, 100)),
+            Fund = _Fund(),
             Investor = _Investor(),
             SalesRepresentative = _SalesRep()
         };
@@ -56,6 +58,18 @@ namespace TransactionReportGenerator.Test
         public TransactionFactory WithSalesRep(Func<string> salesRep)
         {
             _SalesRep = salesRep;
+            return this;
+        }
+
+        public TransactionFactory WithFund(Func<string> fund)
+        {
+            _Fund = fund;
+            return this;
+        }
+
+        public TransactionFactory WithShares(Func<double> shares)
+        {
+            _Shares = shares;
             return this;
         }
     }
