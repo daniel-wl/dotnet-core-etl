@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using CsvHelper;
+using FluentAssertions;
 using NUnit.Framework;
-using TransactionReportGenerator;
-using TransactionReportGenerator.Reports;
 
 namespace TransactionReportGenerator.Test
 {
@@ -17,19 +16,21 @@ namespace TransactionReportGenerator.Test
         public void LoadValidCsvTest()
         {
             var transactions = TransactionLoader.LoadTransactions(KnownGoodCsv);
-            Assert.AreEqual(12, transactions.Count, "Incorrect number of rows.");
+            transactions.Should().HaveCount(12);
         }
 
         [Test]
         public void LoadCsvWithTooManyColumnsTest()
         {
-            Assert.Throws<BadDataException>(() => TransactionLoader.LoadTransactions(CsvWithTooManyColumns), "Loading a csv with too many columns should throw BadDataException");
+            Action loadBadCsv = () => TransactionLoader.LoadTransactions(CsvWithTooManyColumns);
+            loadBadCsv.Should().Throw<BadDataException>();
         }
 
         [Test]
         public void LoadCsvWithTooFewColumnsTest()
         {
-            Assert.Throws<BadDataException>(() => TransactionLoader.LoadTransactions(CsvWithTooFewColumns), "Loading a csv with too few columns should throw BadDataException");
+            Action loadBadCsv = () => TransactionLoader.LoadTransactions(CsvWithTooFewColumns);
+            loadBadCsv.Should().Throw<BadDataException>();
         }
     }
 }

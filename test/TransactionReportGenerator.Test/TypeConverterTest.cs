@@ -1,5 +1,5 @@
 using System;
-using System.IO;
+using FluentAssertions;
 using NUnit.Framework;
 using TransactionReportGenerator.Models;
 using TransactionReportGenerator.Models.TypeConverters;
@@ -13,9 +13,9 @@ namespace TransactionReportGenerator.Test
         [TestCase("bUy")]
         public void ConvertValidTransactionTypeBuyTest_Buy(string toConvert)
         {
-            TransactionTypeConverter converter = new TransactionTypeConverter();
-            TransactionType convertedType = (TransactionType)converter.ConvertFromString(toConvert, null, null);
-            Assert.AreEqual(TransactionType.Buy, convertedType, "Expected BUY to convert to TransactionType.Buy.");
+            var converter = new TransactionTypeConverter();
+            var convertedType = (TransactionType)converter.ConvertFromString(toConvert, null, null);
+            convertedType.Should().Be(TransactionType.Buy);
         }
 
         [TestCase("SELL")]
@@ -23,9 +23,9 @@ namespace TransactionReportGenerator.Test
         [TestCase("sELl")]
         public void ConvertValidTransactionTypeValueTest_Sell(string toConvert)
         {
-            TransactionTypeConverter converter = new TransactionTypeConverter();
-            TransactionType convertedType = (TransactionType)converter.ConvertFromString(toConvert, null, null);
-            Assert.AreEqual(TransactionType.Sell, convertedType, "Expected SELL to convert to TransactionType.Buy.");
+            var converter = new TransactionTypeConverter();
+            var convertedType = (TransactionType)converter.ConvertFromString(toConvert, null, null);
+            convertedType.Should().Be(TransactionType.Sell);
         }
 
         [TestCase("abc")]
@@ -35,9 +35,9 @@ namespace TransactionReportGenerator.Test
         [TestCase(null)]
         public void ConvertInvalidTransactionTypeValueTest(string toConvert)
         {
-            TransactionTypeConverter converter = new TransactionTypeConverter();
-            TransactionType convertedType = (TransactionType)converter.ConvertFromString(toConvert, null, null);
-            Assert.AreEqual(TransactionType.None, convertedType, "Expected SELL to convert to TransactionType.Buy.");
+            var converter = new TransactionTypeConverter();
+            var convertedType = (TransactionType)converter.ConvertFromString(toConvert, null, null);
+            convertedType.Should().Be(TransactionType.None);
         }
 
         [TestCase("$0.99", 0.99)]
@@ -46,16 +46,16 @@ namespace TransactionReportGenerator.Test
         [TestCase("$2348.00", 2348.00)]
         [TestCase("$123.0012", 123.0012)]
         [TestCase("-123.99", -123.99)]
-        [TestCase("-123", -123)]       
-        [TestCase("-123.00", -123.00)]      
+        [TestCase("-123", -123)]
+        [TestCase("-123.00", -123.00)]
         [TestCase("0.99", 0.99)]
         [TestCase("0", 0)]
         [TestCase("123.123", 123.123)]
         public void ConvertValidPriceTest(string toConvert, double expectedValue)
         {
-            PriceTypeConverter converter = new PriceTypeConverter();
-            double convertedType = (double)converter.ConvertFromString(toConvert, null, null);
-            Assert.AreEqual(expectedValue, convertedType, $"Expected valid value {toConvert} to convert successfully.");
+            var converter = new PriceTypeConverter();
+            var convertedType = (double)converter.ConvertFromString(toConvert, null, null);
+            convertedType.Should().Be(expectedValue);
         }
 
         [TestCase("abc")]
@@ -64,10 +64,8 @@ namespace TransactionReportGenerator.Test
         [TestCase("#0.99")]
         public void ConvertInvalidPriceTest(string toConvert)
         {
-            PriceTypeConverter converter = new PriceTypeConverter();
-            Assert.Throws<FormatException>(() => {
-                converter.ConvertFromString(toConvert, null, null);
-            });
+            Action convertInvalidPrice = () => new PriceTypeConverter().ConvertFromString(toConvert, null, null);
+            convertInvalidPrice.Should().Throw<FormatException>();
         }
     }
 }

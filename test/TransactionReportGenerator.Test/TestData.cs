@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TransactionReportGenerator.Reports;
 using TransactionReportGenerator.Models;
 
 namespace TransactionReportGenerator.Test
@@ -19,47 +18,47 @@ namespace TransactionReportGenerator.Test
                 new Transaction
                 {
                     Fund = "Fund 1",
-                    Investor = "John Doe",
-                    Price = 1,
-                    TransactionType = TransactionType.Sell,
-                    Date = DateTime.Now.Subtract(new TimeSpan(days: 1, hours: 0, minutes:0, seconds: 0)),
-                    SalesRepresentative = "Sally"
+                        Investor = "John Doe",
+                        Price = 1,
+                        TransactionType = TransactionType.Sell,
+                        Date = DateTime.Now.Subtract(new TimeSpan(days: 1, hours: 0, minutes: 0, seconds: 0)),
+                        SalesRepresentative = "Sally"
                 },
                 new Transaction
                 {
                     Fund = "Fund 1",
-                    Investor = "Samantha Sample",
-                    Price = 1,
-                    TransactionType = TransactionType.Sell,
-                    Date = DateTime.Now.Subtract(new TimeSpan(days: 1, hours: 0, minutes:0, seconds: 0)),
-                    SalesRepresentative = "Bob"               
+                        Investor = "Samantha Sample",
+                        Price = 1,
+                        TransactionType = TransactionType.Sell,
+                        Date = DateTime.Now.Subtract(new TimeSpan(days: 1, hours: 0, minutes: 0, seconds: 0)),
+                        SalesRepresentative = "Bob"
                 },
                 new Transaction
                 {
                     Fund = "Fund 2",
-                    Investor = "John Doe",
-                    Price = 2,
-                    TransactionType = TransactionType.Sell,
-                    Date = DateTime.Now.Subtract(new TimeSpan(days: 2, hours: 0, minutes:0, seconds: 0)),
-                    SalesRepresentative = "Sally"               
+                        Investor = "John Doe",
+                        Price = 2,
+                        TransactionType = TransactionType.Sell,
+                        Date = DateTime.Now.Subtract(new TimeSpan(days: 2, hours: 0, minutes: 0, seconds: 0)),
+                        SalesRepresentative = "Sally"
                 },
                 new Transaction
                 {
                     Fund = "Fund 1",
-                    Investor = "John Doe",
-                    Price = 3,
-                    TransactionType = TransactionType.Buy,
-                    Date = DateTime.Now.Subtract(new TimeSpan(days: 3, hours: 0, minutes:0, seconds: 0)),
-                    SalesRepresentative = "Sally"                
+                        Investor = "John Doe",
+                        Price = 3,
+                        TransactionType = TransactionType.Buy,
+                        Date = DateTime.Now.Subtract(new TimeSpan(days: 3, hours: 0, minutes: 0, seconds: 0)),
+                        SalesRepresentative = "Sally"
                 },
                 new Transaction
                 {
                     Fund = "Fund 1",
-                    Investor = "Tom Test",
-                    Price = 1,
-                    TransactionType = TransactionType.Sell,
-                    Date = DateTime.Now.Subtract(new TimeSpan(days: 1, hours: 0, minutes:0, seconds: 0)),
-                    SalesRepresentative = "Sally"                    
+                        Investor = "Tom Test",
+                        Price = 1,
+                        TransactionType = TransactionType.Sell,
+                        Date = DateTime.Now.Subtract(new TimeSpan(days: 1, hours: 0, minutes: 0, seconds: 0)),
+                        SalesRepresentative = "Sally"
                 }
             };
         }
@@ -71,35 +70,35 @@ namespace TransactionReportGenerator.Test
                 new Transaction
                 {
                     Fund = "Fund 1",
-                    Shares = 10,
-                    Investor = "Investor A",
-                    Price = 10,
-                    TransactionType = TransactionType.Buy
+                        Shares = 10,
+                        Investor = "Investor A",
+                        Price = 10,
+                        TransactionType = TransactionType.Buy
                 },
                 new Transaction
                 {
                     Fund = "Fund 2",
-                    Shares = 10,
-                    Investor = "Investor A",
-                    Price = 10,
-                    TransactionType = TransactionType.Buy
+                        Shares = 10,
+                        Investor = "Investor A",
+                        Price = 10,
+                        TransactionType = TransactionType.Buy
                 },
                 new Transaction
                 {
                     Fund = "Fund 1",
-                    Shares = 10,
-                    Investor = "Investor A",
-                    Price = 10,
-                    TransactionType = TransactionType.Sell
+                        Shares = 10,
+                        Investor = "Investor A",
+                        Price = 10,
+                        TransactionType = TransactionType.Sell
                 },
                 new Transaction
                 {
                     Fund = "Fund 1",
-                    Shares = 10,
-                    Investor = "Investor A",
-                    Price = 10,
-                    TransactionType = TransactionType.Sell,
-                    Date = DateTime.Now.Add(new TimeSpan(24, 0, 0))
+                        Shares = 10,
+                        Investor = "Investor A",
+                        Price = 10,
+                        TransactionType = TransactionType.Sell,
+                        Date = DateTime.Now.Add(new TimeSpan(24, 0, 0))
                 }
             };
         }
