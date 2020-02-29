@@ -27,15 +27,5 @@ namespace TransactionReportGenerator.Reports
         }
 
         public abstract string PrintToString();
-
-        internal List<string> GetFundsPerInvestor(string investor)
-        {
-            return Transactions.Where(t => t.Investor == investor).Select(t => t.Fund).Distinct().ToList();
-        }
-
-        internal string[] GetUniqueInvestors(List<Transaction> transactions)
-        {
-            return transactions.Select(t => t.Investor).Distinct().ToArray();
-        }
     }
 }

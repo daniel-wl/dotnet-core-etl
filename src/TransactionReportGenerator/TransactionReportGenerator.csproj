@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>TransactionReportGenerator</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="7.1.0"/>

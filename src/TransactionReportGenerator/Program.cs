@@ -14,7 +14,7 @@ namespace TransactionReportGenerator
 
             if (args.Length != 1)
             {
-                Console.WriteLine("Usage: dotnet run PathToCsv");
+                Console.WriteLine("Missing Argument. Must provide path to CSV.");
                 return 1;
             }
 

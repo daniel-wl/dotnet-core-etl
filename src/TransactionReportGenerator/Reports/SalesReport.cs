@@ -127,5 +127,10 @@ namespace TransactionReportGenerator.Reports
             //else month is greater than 9
             return 10;
         }
+
+        internal string[] GetUniqueInvestors(List<Transaction> transactions)
+        {
+            return transactions.Select(t => t.Investor).Distinct().ToArray();
+        }
     }
 }
