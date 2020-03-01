@@ -74,22 +74,17 @@ namespace TransactionReportGenerator.Reports
 
         internal Dictionary<string, double> GetTotalSoldForDateRangePerInvestor(DateTime startDate)
         {
-            var totalSoldPerInvestor = new Dictionary<string, double>();
             var filteredTransactions = FilterTransactionsByDate(startDate);
-            var investors = GetUniqueInvestors(filteredTransactions);
-
-            foreach (string investor in investors)
-            {
-                double totalSold = GetSellAmountsForInvestor(investor, filteredTransactions).Sum();
-                totalSoldPerInvestor.Add(investor, totalSold);
-            }
-
-            return totalSoldPerInvestor;
+            return GetUniqueInvestors(filteredTransactions)
+                .ToDictionary(investor => investor,
+                    investor => GetSellAmountForInvestor(investor, filteredTransactions));
         }
 
-        internal IEnumerable<double> GetSellAmountsForInvestor(string investor, IEnumerable<Transaction> transactions)
+        internal double GetSellAmountForInvestor(string investor, IEnumerable<Transaction> transactions)
         {
-            return transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell).Select(t => t.Price);
+            return transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell)
+                .Select(t => t.Price * t.Shares)
+                .Sum();
         }
 
         internal IEnumerable<Transaction> FilterTransactionsByDate(DateTime startDate)

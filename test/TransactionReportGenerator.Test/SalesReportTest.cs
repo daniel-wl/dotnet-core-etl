@@ -38,50 +38,77 @@ namespace TransactionReportGenerator.Test
         [Test]
         public void GetUniqueInvestorsTest()
         {
-            var salesReport = Mock.Of<SalesReport>();
-            var numberOfTransactions = Faker.Random.Int(1, 5);
-            var result = salesReport.GetUniqueInvestors(new TransactionFactory().Build(numberOfTransactions));
-            result.Distinct().Should().HaveCount(numberOfTransactions);
+            new SalesReport().GetUniqueInvestors(new TransactionFactory().Build(3))
+                .Should().HaveCount(3);
         }
 
         [Test]
-        public void GetSellAmountsPerInvestorTestTest()
+        public void GetSellAmountsPerInvestorTest()
         {
-            var salesReport = Mock.Of<SalesReport>();
+            var factory = new TransactionFactory();
             var numberOfTransactions = Faker.Random.Int(1, 100);
-            var transactions = new TransactionFactory()
-                .WithPrice(() => numberOfTransactions)
-                .WithInvestor(() => "John Doe")
+            var allTransactions = factory.Build(numberOfTransactions);
+            var transactionsForInvestor1 = factory
+                .WithPrice(() => 100)
+                .WithShares(() => 1)
+                .WithTransactionType(() => TransactionType.Sell)
+                .WithInvestor(() => "Investor 1")
                 .WithTransactionType(() => TransactionType.Sell)
                 .Build(numberOfTransactions);
-            var result = salesReport.GetSellAmountsForInvestor("John Doe", transactions);
-            result.Should().HaveCount(numberOfTransactions);
-            Enumerable.Sum(result).Should().Be(Enumerable.Sum(transactions.Select(t => t.Price)));
+            allTransactions.AddRange(transactionsForInvestor1);
+            var result = new SalesReport().GetSellAmountForInvestor("Investor 1", allTransactions);
+            result.Should().Be(numberOfTransactions * 100);
         }
 
         [Test]
         public void GetSummaryForDateRangeTest()
         {
-            var factory = new TransactionFactory().WithDate(() => DateTime.Now).WithSalesRep(() => "John Doe");
-            var transactions = factory.Build(Faker.Random.Int(1, 100));
-            transactions.Add(factory.WithSalesRep(() => "Sam Sample").WithDate(() => Faker.Date.Past(5)).Build());
-            var salesReport = new SalesReport(transactions);
-            var totalSold = salesReport.GetTotalSoldForDateRangePerInvestor(DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0)));
-            totalSold.Should().HaveCount(transactions.Count - 1);
-            totalSold.Should().NotContainKey("Sam Sample");
+            var allTransactions = new List<Transaction>();
+            var numberOfTransactions = 10;
+            var factory = new TransactionFactory()
+                .WithInvestor(() => "Investor 1")
+                .WithDate(() => DateTime.Now)
+                .WithPrice(() => 100)
+                .WithShares(() => 1)
+                .WithTransactionType(() => TransactionType.Sell);
+            allTransactions.AddRange(factory.Build(numberOfTransactions));
+
+            allTransactions.AddRange(factory
+                .WithInvestor(() => "Investor 2")
+                .WithDate(() => DateTime.Now)
+                .WithPrice(() => 100)
+                .WithShares(() => 1)
+                .WithTransactionType(() => TransactionType.Sell)
+                .Build(numberOfTransactions));
+
+            allTransactions.AddRange(factory
+                .WithInvestor(() => "Investor 3")
+                .WithDate(() => DateTime.Now.Subtract(new TimeSpan(10, 0, 0)))
+                .WithTransactionType(() => TransactionType.Sell)
+                .Build(numberOfTransactions));
+
+            var result = new SalesReport(allTransactions).GetTotalSoldForDateRangePerInvestor(DateTime.Now.Subtract(new TimeSpan(5, 0, 0)));
+            result.Select(kvp => kvp.Key).Should().NotContain("Investor 3")
+                .And.Contain("Investor 1")
+                .And.Contain("Investor 2");
+
+            result["Investor 1"].Should().Be(numberOfTransactions * 100);
+            result["Investor 2"].Should().Be(numberOfTransactions * 100);
         }
 
         [Test]
         public void FilterTransactionsByDateTest()
         {
-            var factory = new TransactionFactory().WithDate(() => Faker.Date.Recent(1));
-            var transactions = factory.Build(3);
-            transactions.AddRange(factory.WithDate(() => Faker.Date.Recent(2)).Build(3));
-            transactions.AddRange(factory.WithDate(() => Faker.Date.Recent(3)).Build(3));
-            var salesSummary = new SalesReport(transactions);
-            var startDate = DateTime.Now.Subtract(new TimeSpan(2, 0, 0, 0));
-            var result = salesSummary.FilterTransactionsByDate(startDate);
-            result.Select(t => t.Date).Should().OnlyContain(t => t >= startDate);
+            var factory = new TransactionFactory().WithDate(() => DateTime.Now);
+            var transactionsFromToday = factory.Build(3);
+            var transactionsFromFiveDaysAgo = factory.WithDate(() => Faker.Date.Recent(5)).Build(3);
+            var allTransactions = new List<Transaction>();
+            allTransactions.AddRange(transactionsFromToday);
+            allTransactions.AddRange(transactionsFromFiveDaysAgo);
+
+            var twoDaysAgo = DateTime.Now.Subtract(new TimeSpan(2, 0, 0, 0));
+            var result = new SalesReport(allTransactions).FilterTransactionsByDate(twoDaysAgo)
+                .Select(t => t.Date).Should().OnlyContain(d => d >= twoDaysAgo);
         }
 
         [TestCase(1, 1)]
@@ -98,9 +125,8 @@ namespace TransactionReportGenerator.Test
         [TestCase(12, 10)]
         public void GetStartOfQuarterTest(int month, int expectedResult)
         {
-            var salesSummary = new SalesReport(TestData.GetFakeTransactions());
-            var startOfQuarter = salesSummary.GetStartOfQuarter(new DateTime(year: 2018, month: month, day: 15));
-            startOfQuarter.Should().Be(expectedResult);
+            new SalesReport().GetStartOfQuarter(new DateTime(year: 2018, month: month, day: 15))
+                .Should().Be(expectedResult);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace TransactionReportGenerator
         public static void RunMenuLoop(string csvFile)
         {
             ConsoleKey choice;
-            List<Transaction> transactions = TransactionLoader.LoadTransactions(csvFile);
+            var transactions = TransactionLoader.LoadTransactions(csvFile);
 
             PrintTitle();
 
@@ -74,7 +74,7 @@ namespace TransactionReportGenerator
             return input;
         }
 
-        public static void RunBusinessLogic(ConsoleKey choice, List<Transaction> transactions)
+        public static void RunBusinessLogic(ConsoleKey choice, IEnumerable<Transaction> transactions)
         {
             switch (choice)
             {
