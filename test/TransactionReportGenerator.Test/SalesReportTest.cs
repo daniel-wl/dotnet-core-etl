@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Bogus;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 using TransactionReportGenerator.Models;
 using TransactionReportGenerator.Reports;
@@ -13,34 +12,6 @@ namespace TransactionReportGenerator.Test
     public class SalesReportTest
     {
         public static Faker Faker = new Faker();
-
-        [Test]
-        public void CreateSalesSummaryWithNullTransactionsTest()
-        {
-            Action createSalesReportWithNullTransactionsList = () => new SalesReport(null);
-            createSalesReportWithNullTransactionsList.Should().Throw<ArgumentNullException>("creating a sales summary with null transactions should throw");
-        }
-
-        [Test]
-        public void CreateSalesSummaryWithEmptyTransactionsTest()
-        {
-            Action createSalesReportWithEmptyTransactionsList = () => new SalesReport(new List<Transaction>());
-            createSalesReportWithEmptyTransactionsList.Should().Throw<ArgumentException>("creating a sales summary with empty transactions should throw");
-        }
-
-        [Test]
-        public void CreateSalesSummaryWithTransactionsTest()
-        {
-            Action createSalesReportWithNonEmptyTransactionsList = () => new SalesReport(new TransactionFactory().Build(3));
-            createSalesReportWithNonEmptyTransactionsList.Should().NotThrow("creating a sales summary with a non-empty transaction list should not throw.");
-        }
-
-        [Test]
-        public void GetUniqueInvestorsTest()
-        {
-            new SalesReport().GetUniqueInvestors(new TransactionFactory().Build(3))
-                .Should().HaveCount(3);
-        }
 
         [Test]
         public void GetSellAmountsPerInvestorTest()

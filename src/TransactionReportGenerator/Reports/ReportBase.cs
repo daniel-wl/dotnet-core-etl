@@ -27,5 +27,10 @@ namespace TransactionReportGenerator.Reports
         }
 
         public abstract string PrintToString();
+
+        internal IEnumerable<string> GetUniqueInvestors(IEnumerable<Transaction> transactions)
+        {
+            return transactions.Select(t => t.Investor).Distinct();
+        }
     }
 }

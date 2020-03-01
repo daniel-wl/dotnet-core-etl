@@ -67,10 +67,8 @@ namespace TransactionReportGenerator.Reports
             return GetTotalSoldForDateRangePerInvestor(beginningOfQuarter);
         }
 
-        internal Dictionary<string, double> GetInceptionToDateSalesPerInvestor()
-        {
-            return GetTotalSoldForDateRangePerInvestor(DateTime.MinValue);
-        }
+        internal Dictionary<string, double> GetInceptionToDateSalesPerInvestor() =>
+            GetTotalSoldForDateRangePerInvestor(DateTime.MinValue);
 
         internal Dictionary<string, double> GetTotalSoldForDateRangePerInvestor(DateTime startDate)
         {
@@ -80,17 +78,13 @@ namespace TransactionReportGenerator.Reports
                     investor => GetSellAmountForInvestor(investor, filteredTransactions));
         }
 
-        internal double GetSellAmountForInvestor(string investor, IEnumerable<Transaction> transactions)
-        {
-            return transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell)
-                .Select(t => t.Price * t.Shares)
-                .Sum();
-        }
+        internal double GetSellAmountForInvestor(string investor, IEnumerable<Transaction> transactions) =>
+            transactions.Where(t => t.Investor == investor && t.TransactionType == TransactionType.Sell)
+            .Select(t => t.Price * t.Shares)
+            .Sum();
 
-        internal IEnumerable<Transaction> FilterTransactionsByDate(DateTime startDate)
-        {
-            return Transactions.Where(t => t.Date >= startDate).ToList();
-        }
+        internal IEnumerable<Transaction> FilterTransactionsByDate(DateTime startDate) =>
+            Transactions.Where(t => t.Date >= startDate).ToList();
 
         internal int GetStartOfQuarter(DateTime now)
         {
@@ -120,11 +114,6 @@ namespace TransactionReportGenerator.Reports
 
             //else month is greater than 9
             return 10;
-        }
-
-        internal IEnumerable<string> GetUniqueInvestors(IEnumerable<Transaction> transactions)
-        {
-            return transactions.Select(t => t.Investor).Distinct();
         }
     }
 }
