@@ -15,24 +15,19 @@ namespace TransactionReportGenerator.Console
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
             Parser.Default.ParseArguments<Options>(args)
-                .WithParsed<Options>(o => Run(o.PathToCsv));
+                .WithParsed<Options>(options => Run(options));
         }
 
-        public static void Run(string csvFile)
+        public static void Run(Options options)
         {
-            if (!File.Exists(csvFile))
+            if (!File.Exists(options.PathToCsv))
             {
-                System.Console.WriteLine($"File at {csvFile} does not exist.");
+                System.Console.WriteLine($"File at {options.PathToCsv} does not exist.");
+                Environment.Exit(1);
             }
-            else
-            {
-                RunMenuLoop(TransactionLoader.LoadTransactions(csvFile));
-            }
-        }
 
-        public static void RunMenuLoop(IEnumerable<Transaction> transactions)
-        {
             ConsoleKey choice;
+            var transactions = TransactionLoader.LoadTransactions(options.PathToCsv);
             PrintTitle();
 
             do
@@ -108,7 +103,7 @@ namespace TransactionReportGenerator.Console
         {
             System.Console.WriteLine("Fatal error. Aborting.");
             System.Console.WriteLine($"Reason: {((Exception)args.ExceptionObject).Message}");
-            Environment.Exit(-1);
+            Environment.Exit(2);
         }
     }
 }
