@@ -37,9 +37,6 @@ namespace TransactionReportGenerator.Reports
         internal Dictionary<string, double> GetNetCashBalancePerFundByInvestor(string investor) =>
             GetFundsForInvestor(investor).ToDictionary(fund => fund, fund => GetCashBalanceForFundByInvestor(fund, investor));
 
-        internal IEnumerable<string> GetFundsForInvestor(string investor) =>
-            Transactions.Where(t => t.Investor == investor).Select(t => t.Fund).Distinct();
-
         internal double GetCashBalanceForFundByInvestor(string fund, string investor)
         {
             var transactions = Transactions.Where(t => t.Fund == fund && t.Investor == investor).ToArray();

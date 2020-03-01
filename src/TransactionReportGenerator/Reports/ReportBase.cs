@@ -28,9 +28,18 @@ namespace TransactionReportGenerator.Reports
 
         public abstract string PrintToString();
 
-        internal IEnumerable<string> GetUniqueInvestors(IEnumerable<Transaction> transactions)
+        internal IEnumerable<string> GetUniqueInvestors(IEnumerable<Transaction> transactions) =>
+            transactions.Select(t => t.Investor).Distinct();
+
+        internal IEnumerable<string> GetFundsForInvestor(string investor) =>
+            Transactions.Where(t => t.Investor == investor).Select(t => t.Fund).Distinct();
+
+        internal double GetNetAmountHeldForInvestor(string investor)
         {
-            return transactions.Select(t => t.Investor).Distinct();
+            var transactionsForInvestor = Transactions.Where(t => t.Investor == investor).ToArray();
+            var totalBought = transactionsForInvestor.Where(t => t.TransactionType == TransactionType.Buy).Select(t => t.Price).Sum();
+            var totalSold = transactionsForInvestor.Where(t => t.TransactionType == TransactionType.Sell).Select(t => t.Price).Sum();
+            return totalSold - totalBought;
         }
     }
 }

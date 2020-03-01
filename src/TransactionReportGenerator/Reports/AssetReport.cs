@@ -34,14 +34,6 @@ namespace TransactionReportGenerator.Reports
                 salesRep => salesRep,
                 salesRep => Transactions.Where(t => t.SalesRepresentative == salesRep).Select(t => t.Investor).Distinct());
 
-        internal double GetNetAmountHeldForInvestor(string investor)
-        {
-            var transactionsForInvestor = Transactions.Where(t => t.Investor == investor).ToArray();
-            var totalBought = transactionsForInvestor.Where(t => t.TransactionType == TransactionType.Buy).Select(t => t.Price).Sum();
-            var totalSold = transactionsForInvestor.Where(t => t.TransactionType == TransactionType.Sell).Select(t => t.Price).Sum();
-            return totalSold - totalBought;
-        }
-
         internal IEnumerable<string> GetUniqueSalesReps() =>
             Transactions.Select(t => t.SalesRepresentative).Distinct();
     }
