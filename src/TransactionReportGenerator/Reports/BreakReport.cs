@@ -10,9 +10,9 @@ namespace TransactionReportGenerator.Reports
 
         public override string PrintToString()
         {
-            StringBuilder output = new StringBuilder();
+            var output = new StringBuilder();
 
-            output.Append("*********** Break Report ***********");
+            output.AppendLine("*********** Break Report ***********");
             output.AppendLine("Not Implemented");
             output.AppendLine();
 

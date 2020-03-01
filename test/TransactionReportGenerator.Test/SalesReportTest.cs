@@ -61,7 +61,7 @@ namespace TransactionReportGenerator.Test
         }
 
         [Test]
-        public void GetSummaryForDateRangeTest()
+        public void GetTotalSoldForDateRangePerInvestorTest()
         {
             var allTransactions = new List<Transaction>();
             var numberOfTransactions = 10;
