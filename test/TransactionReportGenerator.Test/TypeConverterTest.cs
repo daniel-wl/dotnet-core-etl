@@ -1,8 +1,8 @@
 using System;
 using FluentAssertions;
 using NUnit.Framework;
-using TransactionReportGenerator.Models;
-using TransactionReportGenerator.Models.TypeConverters;
+using TransactionReportGenerator.Core.Models;
+using TransactionReportGenerator.Core.Models.TypeConverters;
 
 namespace TransactionReportGenerator.Test
 {

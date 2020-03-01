@@ -1,4 +1,4 @@
-namespace TransactionReportGenerator.Models
+namespace TransactionReportGenerator.Core.Models
 {
     public enum TransactionType
     {

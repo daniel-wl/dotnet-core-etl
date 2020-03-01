@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CsvHelper;
-using TransactionReportGenerator.Models;
+using TransactionReportGenerator.Core.Models;
 
-namespace TransactionReportGenerator
+namespace TransactionReportGenerator.Core
 {
     public static class TransactionLoader
     {

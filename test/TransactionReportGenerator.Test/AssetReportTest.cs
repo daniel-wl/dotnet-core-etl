@@ -1,7 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
-using TransactionReportGenerator.Models;
-using TransactionReportGenerator.Reports;
+using TransactionReportGenerator.Core.Models;
+using TransactionReportGenerator.Core.Reports;
 
 namespace TransactionReportGenerator.Test
 {

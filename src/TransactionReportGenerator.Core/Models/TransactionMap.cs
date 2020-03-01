@@ -1,7 +1,7 @@
 using CsvHelper.Configuration;
-using TransactionReportGenerator.Models.TypeConverters;
+using TransactionReportGenerator.Core.Models.TypeConverters;
 
-namespace TransactionReportGenerator.Models
+namespace TransactionReportGenerator.Core.Models
 {
     public sealed class TransactionMap : ClassMap<Transaction>
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bogus;
-using TransactionReportGenerator.Models;
+using TransactionReportGenerator.Core.Models;
 
 namespace TransactionReportGenerator.Test
 {

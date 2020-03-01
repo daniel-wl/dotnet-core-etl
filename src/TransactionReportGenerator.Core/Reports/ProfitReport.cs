@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TransactionReportGenerator.Models;
+using TransactionReportGenerator.Core.Models;
 
-namespace TransactionReportGenerator.Reports
+namespace TransactionReportGenerator.Core.Reports
 {
     public class ProfitReport : ReportBase
     {

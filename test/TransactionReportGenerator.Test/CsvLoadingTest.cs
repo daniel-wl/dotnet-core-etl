@@ -3,6 +3,7 @@ using System.IO;
 using CsvHelper;
 using FluentAssertions;
 using NUnit.Framework;
+using TransactionReportGenerator.Core;
 
 namespace TransactionReportGenerator.Test
 {
